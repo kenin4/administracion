@@ -24,7 +24,7 @@
         <link href="plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
         <link href="plugins/select2/dist/css/select2.css" rel="stylesheet" type="text/css">
         <link href="plugins/select2/dist/css/select2-bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="{{ asset("css/font-awesome.min.css") }}" rel="stylesheet">
         
         
         
@@ -138,21 +138,37 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>2011020021</td>
-                                        <td>Daniel Alejandro Hernández Gómez</td>
-                                        <td>Ing. en Computación</td>
-                                        <td>2016</td>
-                                        <td>BBDH3</td>
-                                        <td>29/04/2016</td>
-                                        <td>29/04/2016</td>
-                                        <td>Maria Luisa</td>
+                                    @foreach($egresados as $egresado )
+                                        
+                                            @foreach($egresado->encuestas as $encuesta)
+                                            <tr>
+                                                
+                                                <?php 
+                                                   $relaciones= App\Egresado_Encuesta::where('egresado_id' , '=', $egresado->id)->where('encuesta_id', '=', $encuesta->id)->get();
+                                                   foreach ($relaciones as $relacion) {
+
+                                                        echo "<td>".$egresado->matricula."</td>";
+                                                        echo "<td>".$egresado->nombre. " ".$egresado->apellidos."</td>";
+                                                        echo "<td>".$egresado->carrera."</td>";
+                                                        echo "<td>".$egresado->fecha_graduacion."</td>";
+                                                        echo "<td>".$encuesta->codigo."</td>";
+                                                        echo "<td>".$relacion->fecha_aplicacion."</td>";
+                                                        echo "<td>".$relacion->fecha_proxima_aplicacion."</td>";
+                                                        echo "<td>".$encuesta->usuario->nombre."</td>";
+                                                   }
+                                                   
+                                                ?>
+                                            
                                         <td><span class="label label-danger">Vencido</span></td>
                                         <td>
                                             <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" data-toggle="modal" data-target="#modal-editar"> <i class="fa fa-pencil"></i> </button>
                                             <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" > <i class="fa fa-trash"></i> </button>
                                         </td>
-                                    </tr>
+                                        </tr>
+                                        @endforeach
+                                    
+
+                                    @endforeach
                                                                            
                                     </tbody>
                                 </table>
@@ -160,14 +176,7 @@
                         </div>
                     </div><!-- end col -->
 
-                    @foreach($egresados as $egresado)
-                        {{var_dump($egresado->nombre) . " id= ". $egresado->id }}
-                        <br>
-                        @foreach($egresado->encuestas as $encuesta )
-                            {{var_dump($encuesta->codigo)}}
-                        @endforeach
-                        <br><br>
-                    @endforeach
+                   
 
                 </div>
                 <!-- end row -->
@@ -344,7 +353,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-4">Fecha de Aplicación</label>
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose">
+                                                                <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose">
                                                                 <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
                                                             </div><!-- input-group -->
 
@@ -357,7 +366,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-4">Próxima Aplicación</label>
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose2">
+                                                                <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose2">
                                                                 <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
                                                             </div><!-- input-group -->
 
@@ -407,12 +416,12 @@
             jQuery('#datepicker-autoclose').datepicker({
                 autoclose: true,
                 todayHighlight: true,
-                format: 'dd/mm/yyyy'
+                format: 'yyyy/mm/dd'
             });
              jQuery('#datepicker-autoclose2').datepicker({
                 autoclose: true,
                 todayHighlight: true,
-                 format: 'dd/mm/yyyy'
+                 format: 'yyyy/mm/dd'
             });
         </script>
 
