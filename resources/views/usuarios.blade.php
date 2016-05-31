@@ -19,6 +19,8 @@
         <link href="{{ asset("css/pages.css") }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset("css/menu.css") }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset("css/responsive.css") }}" rel="stylesheet" type="text/css" />
+
+        <link href="{{ asset("css/font-awesome.min.css") }}" rel="stylesheet">
         
         
         <link href="{{ asset("plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css") }}" rel="stylesheet">
@@ -27,7 +29,7 @@
         <link href="{{ asset("plugins/select2/dist/css/select2-bootstrap.css") }}" rel="stylesheet" type="text/css">
         <link href="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.css") }}" rel="stylesheet" type="text/css" />
 
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 
         <script src="{{ asset("js/modernizr.min.js") }}"></script>
 
