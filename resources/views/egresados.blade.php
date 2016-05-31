@@ -6,36 +6,38 @@
         <meta name="description" content="Sistema para la administración de alumnos egresados de la UTM">
         <meta name="author" content="Mictlan Software">
 
-        <link rel="shortcut icon" href="images/favicon.ico">
+        <link rel="shortcut icon" href="{{ asset("images/favicon.ico") }}" >
 
         <title>Sistema de administración</title>
-        
-		<link rel="stylesheet" href="plugins/morris/morris.css">
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="css/core.css" rel="stylesheet" type="text/css" />
-        <link href="css/components.css" rel="stylesheet" type="text/css" />
-        <link href="css/icons.css" rel="stylesheet" type="text/css" />
-        <link href="css/pages.css" rel="stylesheet" type="text/css" />
-        <link href="css/menu.css" rel="stylesheet" type="text/css" />
-        <link href="css/responsive.css" rel="stylesheet" type="text/css" />
-        
-        
-        <link href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-        <link href="plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-        <link href="plugins/select2/dist/css/select2.css" rel="stylesheet" type="text/css">
-        <link href="plugins/select2/dist/css/select2-bootstrap.css" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="{{ asset("plugins/morris/morris.css") }}">
+        <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/core.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/components.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/icons.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/pages.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/menu.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/responsive.css") }}" rel="stylesheet" type="text/css" />
+
+
+        <link href="{{ asset("plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css") }}" rel="stylesheet">
+        <link href="{{ asset("plugins/bootstrap-daterangepicker/daterangepicker.css") }}" rel="stylesheet">
+        <link href="{{ asset("plugins/select2/dist/css/select2.css") }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset("plugins/select2/dist/css/select2-bootstrap.css") }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.css") }}" rel="stylesheet" type="text/css" />
+
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        
+
         <!-- DataTables -->
-        <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
-        
-        
-        
-        <script src="js/modernizr.min.js"></script>
+        <link href="{{ asset("plugins/datatables/jquery.dataTables.min.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("plugins/datatables/buttons.bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("plugins/datatables/fixedHeader.bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("plugins/datatables/responsive.bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("plugins/datatables/scroller.bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+
+
+
+        <script src="{{ asset("js/modernizr.min.js") }}"></script>
 
     </head>
 
@@ -60,7 +62,7 @@
 
                             <li class="dropdown user-box">
                                 <a href="" class="dropdown-toggle waves-effect waves-light profile " data-toggle="dropdown" aria-expanded="true">
-                                    <img src="images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
+                                    <img src="{{ asset("images/users/avatar-1.jpg") }}" alt="user-img" class="img-circle user-img">
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{url('logout')}}"><i class="fa fa-sign-out"></i> Salir</a></li>
@@ -127,14 +129,15 @@
                                 
                             </div>
 
-                            <h4 class="header-title m-t-0 m-b-30">Usuarios</h4>
+                            <h4 class="header-title m-t-0 m-b-30">Egresados</h4>
 
                             <div >
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
                                         <th>Matrícula</th>
-                                        <th>Nombre</th>                                        
+                                        <th>Nombre</th>
+                                        <th hidden>Apellidos</th>
                                         <th>Carrera</th>
                                         <th>Correo electrónico</th>
                                         <th>Año de Egreso</th>
@@ -143,57 +146,38 @@
                                         <th>Empleo Actual</th>
                                         <th>Teléfono</th>
                                         <th>Acciones</th>
+                                        <th hidden>Apellidos</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>2011020021</td>
-                                        <td>Daniel Alejandro Hernández Gómez</td>                                  
-                                        <td>Ing. en Computacón</td>
-                                        <td>daniel@extjs.mx</td>
-                                        <td>2016</td>
-                                        <td>San Antonino Castillo Velasco</td>
-                                        <td>Huajuapan de León, Oaxaca</td>
-                                        <td>TEO Mictlán Software</td>
-                                        <td>953 113 69 29</td>
+
+
+
+                                    @foreach( $egresados as $egresado )
+
+                                     <tr id="{{"registro".$egresado->id}}">
+                                        <td>{{ $egresado->matricula }}</td>
+                                        <td>{{ $egresado->nombre." ".$egresado->apellidos }}</td>
+                                         <td hidden>{{ $egresado->apellidos }}</td>
+                                        <td>{{ $egresado->carrera }}</td>
+                                        <td>{{ $egresado->correo }}</td>
+                                        <td>{{ $egresado->fecha_graduacion }}</td>
+                                        <td>{{ $egresado->municipio_procedencia }}</td>
+                                        <td>{{ $egresado->residencia_actual }}</td>
+                                        <td>{{ $egresado->empleo_actual }}</td>
+                                        <td>{{ $egresado->telefono }}</td>
                                         <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" > <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" > <i class="fa fa-trash"></i> </button>
+                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="loadEgresado( {{ $egresado->id }}) " > <i class="fa fa-pencil"></i> </button>
+                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEgresado({{ $egresado->id }})"> <i class="fa fa-trash"></i> </button>
                                         </td>
+                                         <td hidden>{{ $egresado->nombre }}</td>
                                     </tr>
-                                          
+
+                                    @endforeach
                                         
-                                    <tr>
-                                        <td>2011020021</td>
-                                        <td>Daniel Alejandro Hernández Gómez</td>                                  
-                                        <td>Ing. en Computacón</td>
-                                        <td>daniel@extjs.mx</td>
-                                        <td>2016</td>
-                                        <td>San Antonino Castillo Velasco</td>
-                                        <td>Huajuapan de León, Oaxaca</td>
-                                        <td>TEO Mictlán Software</td>
-                                        <td>953 113 69 29</td>
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar"> <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" > <i class="fa fa-trash"></i> </button>
-                                        </td>
-                                    </tr>
+
                                         
-                                        <tr>
-                                        <td>2011020021</td>
-                                        <td>Daniel Alejandro Hernández Gómez</td>                                  
-                                        <td>Ing. en Computacón</td>
-                                        <td>daniel@extjs.mx</td>
-                                        <td>2016</td>
-                                        <td>San Antonino Castillo Velasco</td>
-                                        <td>Huajuapan de León, Oaxaca</td>
-                                        <td>TEO Mictlán Software</td>
-                                        <td>953 113 69 29</td>
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar"> <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" > <i class="fa fa-trash"></i> </button>
-                                        </td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -244,17 +228,21 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title">Agregar Usuario</h4>
+                                            <h4 class="modal-title">Agregar Egresado</h4>
                                         </div>
                                         <div class="modal-body">
                                            
                                             
-                            <form class="form-horizontal" role="form" data-parsley-validate novalidate>                                                                
-                                     
+                            <form class="form-horizontal" role="form" data-parsley-validate novalidate action="egresados/new" method="post">
+
+
+                                {{ csrf_field() }}
+
+
                                 <div class="form-group">
                                     <label for="matricula" class="col-sm-4 control-label">Matrícula: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
+                                        <input type="text" name = "matricula" class="form-control"
                                                id="matricula" placeholder="Matrícula...">
                                     </div>
                                 </div>
@@ -262,31 +250,31 @@
                                 <div class="form-group">
                                     <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
+                                        <input type="text"  class="form-control" name = "nombre"
                                                id="nombre" placeholder="Nombre...">
                                     </div>
                                 </div>
                                                 
                                 <div class="form-group">
-                                    <label for="apellido_p" class="col-sm-4 control-label">Apellido Paterno: </label>
+                                    <label for="apellidos" class="col-sm-4 control-label">Apellidos: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="apellido_p" placeholder="Apellido Paterno...">
+                                        <input type="text"  class="form-control" name="apellidos"
+                                               id="apellidos" placeholder="Apellidos...">
                                     </div>
                                 </div>
-                                                
+
                                 <div class="form-group">
-                                    <label for="apellido_m" class="col-sm-4 control-label">Apellido Materno: </label>
+                                    <label for="carrera" class="col-sm-4 control-label">Carrera: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="apellido_m" placeholder="Apellido Materno...">
+                                        <input type="text"  class="form-control" name="carrera"
+                                               id="carrera" placeholder="Carrera...">
                                     </div>
                                 </div>
                                                 
                                 <div class="form-group">
                                     <label for="correo" class="col-sm-4 control-label">Correo Electrónico: </label>
                                     <div class="col-sm-7">
-                                        <input type="email" required parsley-type="email" class="form-control"
+                                        <input type="email" class="form-control" name="correo"
                                                id="correo" placeholder="Correo Electrónico...">
                                     </div>
                                 </div>
@@ -294,15 +282,15 @@
                                 <div class="form-group">
                                     <label for="anio_egreso" class="col-sm-4 control-label">Año de Egreso: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="anio_egreso" placeholder="Año de Egreso...">
+                                        <input type="text" class="form-control" name="fecha_graduacion"
+                                               id="anio_egreso" placeholder="Año de egreso...">
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="municipio_procedencia" class="col-sm-4 control-label">Municipio de Procedencia: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
+                                        <input type="text" class="form-control" name="municipio"
                                                id="municipio_procedencia" placeholder="¿De Dónde Viene?...">
                                     </div>
                                 </div>
@@ -310,7 +298,7 @@
                                 <div class="form-group">
                                     <label for="residencia_actual" class="col-sm-4 control-label">Residencia Actual: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
+                                        <input type="text"  class="form-control" name="residencia_actual"
                                                id="residencia_actual" placeholder="¿Dónde vive actualmente?...">
                                     </div>
                                 </div>
@@ -318,7 +306,7 @@
                                 <div class="form-group">
                                     <label for="empleo_actual" class="col-sm-4 control-label">Empleo Actual: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
+                                        <input type="text"  class="form-control" name="empleo_actual"
                                                id="empleo_actual" placeholder="¿Dónde trabaja actualmente?...">
                                     </div>
                                 </div>
@@ -326,7 +314,7 @@
                                 <div class="form-group">
                                     <label for="telefono" class="col-sm-4 control-label">Teléfono: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
+                                        <input type="text"  class="form-control" name="telefono"
                                                id="telefono" placeholder="Número de teléfono...">
                                     </div>
                                 </div>
@@ -349,49 +337,175 @@
                                     </div>
                                 </div>
                             </div><!-- /.modal -->
-        
-        
+
+
+
+
+
+        <div id="modal-editar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Editar Egresado</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <form class="form-horizontal" role="form" data-parsley-validate novalidate action="egresados/edit" method="post">
+
+
+                            {{ csrf_field() }}
+
+
+                            <div class="form-group">
+                                <div class="col-sm-7">
+                                    <input type="hidden" name = "id" class="form-control" hidden
+                                           id="id">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="matriculae" class="col-sm-4 control-label">Matrícula: </label>
+                                <div class="col-sm-7">
+                                    <input type="text" name = "matricula" class="form-control"
+                                           id="matriculae" placeholder="Matrícula...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nombree" class="col-sm-4 control-label">Nombre: </label>
+                                <div class="col-sm-7">
+                                    <input type="text"  class="form-control" name = "nombre"
+                                           id="nombree" placeholder="Nombre...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellidose" class="col-sm-4 control-label">Apellidos: </label>
+                                <div class="col-sm-7">
+                                    <input type="text"  class="form-control" name="apellidos"
+                                           id="apellidose" placeholder="Apellidos...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="carrerae" class="col-sm-4 control-label">Carrera: </label>
+                                <div class="col-sm-7">
+                                    <input type="text"  class="form-control" name="carrera"
+                                           id="carrerae" placeholder="Carrera...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correoe" class="col-sm-4 control-label">Correo Electrónico: </label>
+                                <div class="col-sm-7">
+                                    <input type="email" class="form-control" name="correo"
+                                           id="correoe" placeholder="Correo Electrónico...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="anio_egresoe" class="col-sm-4 control-label">Año de Egreso: </label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="fecha_graduacion"
+                                           id="anio_egresoe" placeholder="Año de egreso...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="municipio_procedenciae" class="col-sm-4 control-label">Municipio de Procedencia: </label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="municipio"
+                                           id="municipio_procedenciae" placeholder="¿De Dónde Viene?...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="residencia_actuale" class="col-sm-4 control-label">Residencia Actual: </label>
+                                <div class="col-sm-7">
+                                    <input type="text"  class="form-control" name="residencia_actual"
+                                           id="residencia_actuale" placeholder="¿Dónde vive actualmente?...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="empleo_actuale" class="col-sm-4 control-label">Empleo Actual: </label>
+                                <div class="col-sm-7">
+                                    <input type="text"  class="form-control" name="empleo_actual"
+                                           id="empleo_actuale" placeholder="¿Dónde trabaja actualmente?...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefonoe" class="col-sm-4 control-label">Teléfono: </label>
+                                <div class="col-sm-7">
+                                    <input type="text"  class="form-control" name="telefono"
+                                           id="telefonoe" placeholder="Número de teléfono...">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group pull-right">
+                                <div>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                        Agregar
+                                    </button>
+                                    <button type="reset"
+                                            class="btn btn-default waves-effect waves-light m-l-5">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
 
         <!-- jQuery  -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/detect.js"></script>
-        <script src="js/fastclick.js"></script>
-        <script src="js/jquery.slimscroll.js"></script>
-        <script src="js/jquery.blockUI.js"></script>
-        <script src="js/waves.js"></script>
-        <script src="js/wow.min.js"></script>
-        <script src="js/jquery.nicescroll.js"></script>
-        <script src="js/jquery.scrollTo.min.js"></script>
-        <script src="plugins/jquery-knob/jquery.knob.js"></script>
-		<script src="plugins/morris/morris.min.js"></script>
-		<script src="plugins/raphael/raphael-min.js"></script>
-        <script src="pages/jquery.dashboard.js"></script>
-        <script src="js/jquery.core.js"></script>
-        <script src="js/jquery.app.js"></script>
-        <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-        <script src="plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-        
-        <script src="plugins/select2/dist/js/select2.min.js" type="text/javascript"></script>
+        <script src="{{ asset("js/jquery.min.js") }}"></script>
+        <script src="{{ asset("js/bootstrap.min.js") }}"></script>
+        <script src="{{ asset("js/detect.js") }}"></script>
+        <script src="{{ asset("js/fastclick.js") }}"></script>
+        <script src="{{ asset("js/jquery.slimscroll.js") }}"></script>
+        <script src="{{ asset("js/jquery.blockUI.js") }}"></script>
+        <script src="{{ asset("js/waves.js") }}"></script>
+        <script src="{{ asset("js/wow.min.js") }}"></script>
+        <script src="{{ asset("js/jquery.nicescroll.js") }}"></script>
+        <script src="{{ asset("js/jquery.scrollTo.min.js") }}"></script>
+        <script src="{{ asset("plugins/jquery-knob/jquery.knob.js") }}"></script>
+        <script src="{{ asset("plugins/morris/morris.min.js") }}"></script>
+        <script src="{{ asset("plugins/raphael/raphael-min.js") }}"></script>
+        <script src="{{ asset("pages/jquery.dashboard.js") }}"></script>
+        <script src="{{ asset("js/jquery.core.js") }}"></script>
+        <script src="{{ asset("js/jquery.app.js") }}"></script>
+        <script src="{{ asset("plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js") }}"></script>
+        <script src="{{ asset("plugins/bootstrap-daterangepicker/daterangepicker.js") }}"></script>
+        <script src="{{ asset("plugins/select2/dist/js/select2.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.min.js") }}"></script>
+        <script src="{{ asset("pages/jquery.sweet-alert.init.js") }}"></script>
         
         <!-- Datatables-->
-        <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="plugins/datatables/dataTables.bootstrap.js"></script>
-        <script src="plugins/datatables/dataTables.buttons.min.js"></script>
-        <script src="plugins/datatables/buttons.bootstrap.min.js"></script>
-        <script src="plugins/datatables/jszip.min.js"></script>
-        <script src="plugins/datatables/pdfmake.min.js"></script>
-        <script src="plugins/datatables/vfs_fonts.js"></script>
-        <script src="plugins/datatables/buttons.html5.min.js"></script>
-        <script src="plugins/datatables/buttons.print.min.js"></script>
-        <script src="plugins/datatables/dataTables.fixedHeader.min.js"></script>
-        <script src="plugins/datatables/dataTables.keyTable.min.js"></script>
-        <script src="plugins/datatables/dataTables.responsive.min.js"></script>
-        <script src="plugins/datatables/responsive.bootstrap.min.js"></script>
-        <script src="plugins/datatables/dataTables.scroller.min.js"></script>
+        <script src="{{ asset("plugins/datatables/jquery.dataTables.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/dataTables.bootstrap.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/dataTables.buttons.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/buttons.bootstrap.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/jszip.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/pdfmake.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/vfs_fonts.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/buttons.html5.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/buttons.print.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/dataTables.fixedHeader.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/dataTables.keyTable.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/dataTables.responsive.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/responsive.bootstrap.min.js") }}"></script>
+        <script src="{{ asset("plugins/datatables/dataTables.scroller.min.js") }}"></script>
 
         <!-- Datatable init js -->
-        <script src="pages/datatables.init.js"></script>
+        <script src="{{ asset("pages/datatables.init.js") }}"></script>
         
          <script>
             jQuery(document).ready(function() {
@@ -411,6 +525,90 @@
                 todayHighlight: true,
                  format: 'dd/mm/yyyy'
             });
+
+
+
+            function deleteEgresado( id ){
+
+                swal({
+                    title: "Deseas Continuar?",
+                    text: "No podrás deshacer esto!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Sí, adelante!",
+                    cancelButtonText: "No, cancela!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+
+                        console.log( "presionado ");
+
+                        $.get("egresados/delete/"+id, function(data, status){
+
+                            console.log(  status );
+
+
+                            if( status = "success"){
+
+                                swal({  title:"Eliminado!" ,
+                                    text:"Hecho!",
+                                    type:"success"
+
+                                } , function(){
+
+                                    location.reload();
+
+                                });
+
+                            }
+
+                            else{
+                                swal({  title:"Ups!" ,
+                                    text:"Hubo un problema!",
+                                    type:"error"
+
+                                } , function(){
+
+                                    location.reload();
+
+                                });
+                            }
+
+
+
+                        });
+
+
+
+
+
+                    }
+                });
+
+            }
+
+
+            function loadEgresado( id ){
+
+                var record = document.getElementById("registro"+id);
+                document.getElementById('id').value = id;
+                document.getElementById('matriculae').value=record.childNodes[1].innerHTML;
+                document.getElementById('nombree').value=record.childNodes[23].innerHTML;
+                document.getElementById('apellidose').value=record.childNodes[5].innerHTML;
+                document.getElementById('carrerae').value=record.childNodes[7].innerHTML;
+                document.getElementById('correoe').value=record.childNodes[9].innerHTML;
+                document.getElementById('anio_egresoe').value=record.childNodes[11].innerHTML;
+                document.getElementById('municipio_procedenciae').value=record.childNodes[13].innerHTML;
+                document.getElementById('residencia_actuale').value=record.childNodes[15].innerHTML;
+                document.getElementById('empleo_actuale').value=record.childNodes[17].innerHTML;
+                document.getElementById('telefonoe').value=record.childNodes[19].innerHTML;
+
+
+
+            }
+
         </script>
 
     </body>

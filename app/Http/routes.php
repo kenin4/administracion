@@ -29,9 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('encuestas/delete/{id}','EncuestaController@deleteEncuesta');
 	Route::post('encuestas/edit','EncuestaController@editEncuesta');
 
-	Route::get('egresados', function (){
-    	return View::make('egresados');
-	});
+	Route::get('egresados', 'EgresadoController@getAll');
+    Route::post('egresados/new', 'EgresadoController@addEgresado');
+    Route::post('egresados/edit', 'EgresadoController@editEgresado');
+    Route::get('egresados/delete/{id}', 'EgresadoController@deleteEgresado');
 
 
 });  
