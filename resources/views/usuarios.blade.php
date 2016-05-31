@@ -29,9 +29,7 @@
 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-        
-        
-        <script src="js/modernizr.min.js"></script>
+        <script src="{{ asset("js/modernizr.min.js") }}"></script>
 
     </head>
 
@@ -287,7 +285,6 @@
                         <form class="form-horizontal" role="form" data-parsley-validate novalidate action="{{url('/usuarios/edit')}}" method="post" >
 
                             {{ csrf_field() }}
-
 
 
                             <div class="form-group">

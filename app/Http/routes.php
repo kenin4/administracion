@@ -34,11 +34,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('encuestas/edit','EncuestaController@editEncuesta');
 
 
+
 	Route::post('bind','RelacionController@bind');
 
 	Route::get('egresados', function (){
     	return View::make('egresados');
 	});
+	Route::get('egresados', 'EgresadoController@getAll');
+    Route::post('egresados/new', 'EgresadoController@addEgresado');
+    Route::post('egresados/edit', 'EgresadoController@editEgresado');
+    Route::get('egresados/delete/{id}', 'EgresadoController@deleteEgresado');
+
 
 
 });  
