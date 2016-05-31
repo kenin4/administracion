@@ -160,6 +160,15 @@
                         </div>
                     </div><!-- end col -->
 
+                    @foreach($egresados as $egresado)
+                        {{var_dump($egresado->nombre) . " id= ". $egresado->id }}
+                        <br>
+                        @foreach($egresado->encuestas as $encuesta )
+                            {{var_dump($encuesta->codigo)}}
+                        @endforeach
+                        <br><br>
+                    @endforeach
+
                 </div>
                 <!-- end row -->
                 
@@ -199,6 +208,7 @@
         <div id="modal-responsivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
+                                    <form action="bind" method="POST">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             <h4 class="modal-title">Agregar Registro</h4>
@@ -208,40 +218,27 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="field-1" class="control-label">Egresado:</label>
-                                                        <select class="form-control select2">
+                                                        <select class="form-control select2" name="egresado_id">
+
                                                             <option>Seleccionar Egresado</option>
-                                                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                                <option value="AK">Alaska</option>
-                                                                <option value="HI">Hawaii</option>
-                                                            </optgroup>
-                                                            <optgroup label="Pacific Time Zone">
-                                                                <option value="CA">California</option>
-                                                                <option value="NV">Nevada</option>
-                                                                <option value="OR">Oregon</option>
-                                                                <option value="WA">Washington</option>
-                                                            </optgroup>
+                                                            @foreach($egresados as $egresado)
+                                                                <option value="{{$egresado->id}}">{{$egresado->nombre ." ". $egresado->apellidos ." :: ".$egresado->matricula}}  </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                                 
                                             </div>
                                             <div class="row">
-                                                
+                                                {{ csrf_field() }}
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="field-1" class="control-label">Encuesta:</label>
-                                                        <select class="form-control select2">
+                                                        <select class="form-control select2" name="encuesta_id">
                                                             <option>Selecciona la Encuesta</option>
-                                                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                                <option value="AK">Alaska</option>
-                                                                <option value="HI">Hawaii</option>
-                                                            </optgroup>
-                                                            <optgroup label="Pacific Time Zone">
-                                                                <option value="CA">California</option>
-                                                                <option value="NV">Nevada</option>
-                                                                <option value="OR">Oregon</option>
-                                                                <option value="WA">Washington</option>
-                                                            </optgroup>
+                                                        @foreach($encuestas as $encuesta)
+                                                            <option value="{{$encuesta->id}}">{{$encuesta->codigo}}</option>
+                                                        @endforeach    
                                                         </select>
                                                     </div>
                                                 </div>
@@ -254,7 +251,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-4">Fecha de Aplicación</label>
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose">
+                                                                <input type="text" class="form-control" name="fecha_aplicacion" placeholder="dd/mm/yyyy" id="datepicker-autoclose">
                                                                 <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
                                                             </div><!-- input-group -->
 
@@ -267,7 +264,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-4">Próxima Aplicación</label>
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose2">
+                                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" name="fecha_proxima_aplicacion" id="datepicker-autoclose2">
                                                                 <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
                                                             </div><!-- input-group -->
 
@@ -279,8 +276,9 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
-                                            <button type="button" class="btn btn-info waves-effect waves-light" data-dismiss="modal">Guardar</button>
+                                            <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
                                         </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div><!-- /.modal -->

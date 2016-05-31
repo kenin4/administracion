@@ -25,4 +25,9 @@ class User extends Authenticatable
     ];
 
     public $timestamps = false;
+
+    public function encuestas()
+    {
+        return $this->hasMany('App\Encuesta','id');
+    }
 }
