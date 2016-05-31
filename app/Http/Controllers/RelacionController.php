@@ -13,7 +13,7 @@ class RelacionController extends Controller
 {
     public function bind(Request $data)
     {
-        var_dump($data->all());
+        
         $relacion = new Egresado_Encuesta;
         
         $relacion->egresado_id = $data->egresado_id;
