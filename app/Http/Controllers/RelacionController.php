@@ -13,7 +13,10 @@ class RelacionController extends Controller
 {
     public function bind(Request $data)
     {
-        
+        $busqueda = Egresado_Encuesta::where('egresado_id' , '=', $data->egresado_id)->where('encuesta_id', '=', $data->encuesta_id);
+        if (count($busqueda)!=0) {
+            return redirect('/');
+        }
         $relacion = new Egresado_Encuesta;
         
         $relacion->egresado_id = $data->egresado_id;
