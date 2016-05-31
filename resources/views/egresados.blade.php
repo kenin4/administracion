@@ -242,15 +242,14 @@
                                 <div class="form-group">
                                     <label for="matricula" class="col-sm-4 control-label">Matrícula: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" name = "matricula" class="form-control"
-                                               id="matricula" placeholder="Matrícula...">
+                                        <input  parsley-trigger="change" required type="text" name = "matricula" class="form-control" id="matricula" placeholder="Matrícula...">
                                     </div>
                                 </div>
                             
                                 <div class="form-group">
                                     <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
                                     <div class="col-sm-7">
-                                        <input type="text"  class="form-control" name = "nombre"
+                                        <input parsley-trigger="change" required type="text"  class="form-control" name = "nombre"
                                                id="nombre" placeholder="Nombre...">
                                     </div>
                                 </div>
@@ -258,7 +257,7 @@
                                 <div class="form-group">
                                     <label for="apellidos" class="col-sm-4 control-label">Apellidos: </label>
                                     <div class="col-sm-7">
-                                        <input type="text"  class="form-control" name="apellidos"
+                                        <input parsley-trigger="change" required type="text"  class="form-control" name="apellidos"
                                                id="apellidos" placeholder="Apellidos...">
                                     </div>
                                 </div>
@@ -266,7 +265,7 @@
                                 <div class="form-group">
                                     <label for="carrera" class="col-sm-4 control-label">Carrera: </label>
                                     <div class="col-sm-7">
-                                        <input type="text"  class="form-control" name="carrera"
+                                        <input parsley-trigger="change" required type="text"  class="form-control" name="carrera"
                                                id="carrera" placeholder="Carrera...">
                                     </div>
                                 </div>
@@ -274,7 +273,7 @@
                                 <div class="form-group">
                                     <label for="correo" class="col-sm-4 control-label">Correo Electrónico: </label>
                                     <div class="col-sm-7">
-                                        <input type="email" class="form-control" name="correo"
+                                        <input parsley-trigger="change" required parsley-type="email" type="email" class="form-control" name="correo"
                                                id="correo" placeholder="Correo Electrónico...">
                                     </div>
                                 </div>
@@ -282,7 +281,7 @@
                                 <div class="form-group">
                                     <label for="anio_egreso" class="col-sm-4 control-label">Año de Egreso: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="fecha_graduacion"
+                                        <input parsley-trigger="change" required type="text" class="form-control" name="fecha_graduacion"
                                                id="anio_egreso" placeholder="Año de egreso...">
                                     </div>
                                 </div>
@@ -290,7 +289,7 @@
                                 <div class="form-group">
                                     <label for="municipio_procedencia" class="col-sm-4 control-label">Municipio de Procedencia: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="municipio"
+                                        <input parsley-trigger="change" required type="text" class="form-control" name="municipio"
                                                id="municipio_procedencia" placeholder="¿De Dónde Viene?...">
                                     </div>
                                 </div>
@@ -298,7 +297,7 @@
                                 <div class="form-group">
                                     <label for="residencia_actual" class="col-sm-4 control-label">Residencia Actual: </label>
                                     <div class="col-sm-7">
-                                        <input type="text"  class="form-control" name="residencia_actual"
+                                        <input parsley-trigger="change" required type="text"  class="form-control" name="residencia_actual"
                                                id="residencia_actual" placeholder="¿Dónde vive actualmente?...">
                                     </div>
                                 </div>
@@ -306,7 +305,7 @@
                                 <div class="form-group">
                                     <label for="empleo_actual" class="col-sm-4 control-label">Empleo Actual: </label>
                                     <div class="col-sm-7">
-                                        <input type="text"  class="form-control" name="empleo_actual"
+                                        <input parsley-trigger="change" required type="text"  class="form-control" name="empleo_actual"
                                                id="empleo_actual" placeholder="¿Dónde trabaja actualmente?...">
                                     </div>
                                 </div>
@@ -314,7 +313,7 @@
                                 <div class="form-group">
                                     <label for="telefono" class="col-sm-4 control-label">Teléfono: </label>
                                     <div class="col-sm-7">
-                                        <input type="text"  class="form-control" name="telefono"
+                                        <input parsley-trigger="change" required type="text"  class="form-control" name="telefono"
                                                id="telefono" placeholder="Número de teléfono...">
                                     </div>
                                 </div>
@@ -327,7 +326,7 @@
                                         </button>
                                         <button type="reset"
                                                 class="btn btn-default waves-effect waves-light m-l-5">
-                                            Cancelar
+                                            Limpiar
                                         </button>
                                     </div>
                                 </div>
@@ -368,7 +367,7 @@
                             <div class="form-group">
                                 <label for="matriculae" class="col-sm-4 control-label">Matrícula: </label>
                                 <div class="col-sm-7">
-                                    <input type="text" name = "matricula" class="form-control"
+                                    <input parsley-trigger="change" required type="text" name = "matricula" class="form-control"
                                            id="matriculae" placeholder="Matrícula...">
                                 </div>
                             </div>
@@ -376,7 +375,7 @@
                             <div class="form-group">
                                 <label for="nombree" class="col-sm-4 control-label">Nombre: </label>
                                 <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name = "nombre"
+                                    <input parsley-trigger="change" required type="text"  class="form-control" name = "nombre"
                                            id="nombree" placeholder="Nombre...">
                                 </div>
                             </div>
@@ -384,7 +383,7 @@
                             <div class="form-group">
                                 <label for="apellidose" class="col-sm-4 control-label">Apellidos: </label>
                                 <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name="apellidos"
+                                    <input parsley-trigger="change" required type="text"  class="form-control" name="apellidos"
                                            id="apellidose" placeholder="Apellidos...">
                                 </div>
                             </div>
@@ -392,7 +391,7 @@
                             <div class="form-group">
                                 <label for="carrerae" class="col-sm-4 control-label">Carrera: </label>
                                 <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name="carrera"
+                                    <input  parsley-trigger="change" required type="text"  class="form-control" name="carrera"
                                            id="carrerae" placeholder="Carrera...">
                                 </div>
                             </div>
@@ -400,7 +399,7 @@
                             <div class="form-group">
                                 <label for="correoe" class="col-sm-4 control-label">Correo Electrónico: </label>
                                 <div class="col-sm-7">
-                                    <input type="email" class="form-control" name="correo"
+                                    <input parsley-trigger="change" required parsley-type="email" type="email" class="form-control" name="correo"
                                            id="correoe" placeholder="Correo Electrónico...">
                                 </div>
                             </div>
@@ -408,7 +407,7 @@
                             <div class="form-group">
                                 <label for="anio_egresoe" class="col-sm-4 control-label">Año de Egreso: </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="fecha_graduacion"
+                                    <input parsley-trigger="change" required type="text" class="form-control" name="fecha_graduacion"
                                            id="anio_egresoe" placeholder="Año de egreso...">
                                 </div>
                             </div>
@@ -416,7 +415,7 @@
                             <div class="form-group">
                                 <label for="municipio_procedenciae" class="col-sm-4 control-label">Municipio de Procedencia: </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="municipio"
+                                    <input parsley-trigger="change" required type="text" class="form-control" name="municipio"
                                            id="municipio_procedenciae" placeholder="¿De Dónde Viene?...">
                                 </div>
                             </div>
@@ -424,7 +423,7 @@
                             <div class="form-group">
                                 <label for="residencia_actuale" class="col-sm-4 control-label">Residencia Actual: </label>
                                 <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name="residencia_actual"
+                                    <input parsley-trigger="change" required type="text"  class="form-control" name="residencia_actual"
                                            id="residencia_actuale" placeholder="¿Dónde vive actualmente?...">
                                 </div>
                             </div>
@@ -432,7 +431,7 @@
                             <div class="form-group">
                                 <label for="empleo_actuale" class="col-sm-4 control-label">Empleo Actual: </label>
                                 <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name="empleo_actual"
+                                    <input parsley-trigger="change" required type="text"  class="form-control" name="empleo_actual"
                                            id="empleo_actuale" placeholder="¿Dónde trabaja actualmente?...">
                                 </div>
                             </div>
@@ -440,7 +439,7 @@
                             <div class="form-group">
                                 <label for="telefonoe" class="col-sm-4 control-label">Teléfono: </label>
                                 <div class="col-sm-7">
-                                    <input type="text"  class="form-control" name="telefono"
+                                    <input parsley-trigger="change" required type="text"  class="form-control" name="telefono"
                                            id="telefonoe" placeholder="Número de teléfono...">
                                 </div>
                             </div>
@@ -449,11 +448,11 @@
                             <div class="form-group pull-right">
                                 <div>
                                     <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                        Agregar
+                                        Editar
                                     </button>
                                     <button type="reset"
                                             class="btn btn-default waves-effect waves-light m-l-5">
-                                        Cancelar
+                                        Limpiar
                                     </button>
                                 </div>
                             </div>
@@ -504,6 +503,10 @@
         <script src="{{ asset("plugins/datatables/responsive.bootstrap.min.js") }}"></script>
         <script src="{{ asset("plugins/datatables/dataTables.scroller.min.js") }}"></script>
 
+
+        <!--Validacion de los formularios -->
+        <script type="text/javascript" src="{{ asset("plugins/parsleyjs/dist/parsley.min.js") }}"></script>
+
         <!-- Datatable init js -->
         <script src="{{ asset("pages/datatables.init.js") }}"></script>
         
@@ -511,6 +514,7 @@
             jQuery(document).ready(function() {
                 $(".select2").select2();
                 $('#datatable').dataTable();
+                $('form').parsley();
                 
             });
              

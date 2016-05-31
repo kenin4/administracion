@@ -41,7 +41,6 @@ class EgresadoController extends Controller
     public function addEgresado( Request $data )
     {
 
-
         $egresado = new Egresado;
         $egresado->nombre                   = $data->nombre;
         $egresado->apellidos                = $data->apellidos;

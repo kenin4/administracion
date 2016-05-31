@@ -215,14 +215,14 @@
                                 <div class="form-group">
                                     <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" name="nombre" required class="form-control" id="nombre" placeholder="Nombre...">
+                                        <input parsley-trigger="change" required type="text" name="nombre"  class="form-control" id="nombre" placeholder="Nombre...">
                                     </div>
                                 </div>
                                                 
                                 <div class="form-group">
                                     <label for="apellido_p" class="col-sm-4 control-label">Apellidos: </label>
                                     <div class="col-sm-7">
-                                        <input type="text" name = "apellidos" required class="form-control"  id="apellidos" placeholder="Apellidos...">
+                                        <input parsley-trigger="change" required type="text" name = "apellidos"  class="form-control"  id="apellidos" placeholder="Apellidos...">
                                     </div>
                                 </div>
 
@@ -230,20 +230,20 @@
                                 <div class="form-group">
                                     <label for="usuario" class="col-sm-4 control-label">Correo Electrónico: </label>
                                     <div class="col-sm-7">
-                                        <input type="email" name="email" required parsley-type="email" class="form-control" id="usuario" placeholder="Correo electrónico...">
+                                        <input type="email" name="email" parsley-trigger="change" required parsley-type="email" class="form-control" id="usuario" placeholder="Correo electrónico...">
                                     </div>
                                 </div>
                                                 
                                 <div class="form-group">
                                     <label for="hori-pass1" class="col-sm-4 control-label">Contraseña</label>
                                     <div class="col-sm-7">
-                                        <input id="password" type="password" name="password" placeholder="Ingresa una contraseña fuerte" required class="form-control">
+                                        <input id="password" type="password" name="password" placeholder="Ingresa una contraseña fuerte" parsley-trigger="change" required class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="hori-pass2" class="col-sm-4 control-label">Confirma la contraseña</label>
                                     <div class="col-sm-7">
-                                        <input data-parsley-equalto="#hori-pass1" type="password" required
+                                        <input data-parsley-equalto="#password" type="password" parsley-trigger="change" required
                                                placeholder="Confirma tu contraseña" class="form-control" id="hori-pass2">
                                     </div>
                                 </div>
@@ -294,14 +294,14 @@
                             <div class="form-group">
                                 <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="nombre" required class="form-control" id="nombree" placeholder="Nombre...">
+                                    <input type="text" name="nombre" parsley-trigger="change" required class="form-control" id="nombree" placeholder="Nombre...">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="apellido_p" class="col-sm-4 control-label">Apellidos: </label>
                                 <div class="col-sm-7">
-                                    <input type="text" name = "apellidos" required class="form-control"  id="apellidose" placeholder="Apellidos...">
+                                    <input type="text" name = "apellidos" parsley-trigger="change" required class="form-control"  id="apellidose" placeholder="Apellidos...">
                                 </div>
                             </div>
 
@@ -310,7 +310,7 @@
                             <div class="form-group">
                                 <label for="usuario" class="col-sm-4 control-label">Correo Electrónico: </label>
                                 <div class="col-sm-7">
-                                    <input type="email" name="email" required parsley-type="email" class="form-control" id="emaile" placeholder="Correo electrónico...">
+                                    <input type="email" name="email" parsley-trigger="change" required parsley-type="email" class="form-control" id="emaile" placeholder="Correo electrónico...">
                                 </div>
                             </div>
 
@@ -358,9 +358,13 @@
         <script src="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.min.js") }}"></script>
         <script src="{{ asset("pages/jquery.sweet-alert.init.js") }}"></script>
 
+        <!--Validacion de los formularios -->
+        <script type="text/javascript" src="{{ asset("plugins/parsleyjs/dist/parsley.min.js") }}"></script>
+
         <script>
             jQuery(document).ready(function() {
                 $(".select2").select2();
+                $('form').parsley();
             });
              
             jQuery('#datepicker').datepicker();
