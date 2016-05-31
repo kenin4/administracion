@@ -19,9 +19,10 @@ Route::group(['middleware' => 'auth'], function () {
     	return View::make('index');
 	});
 
-	Route::get('usuarios', function (){
-    	return View::make('usuarios');
-	});
+	Route::get('usuarios', 'UserController@getAll');
+	Route::post('usuarios/new', 'UserController@addUser');
+	Route::post('usuarios/edit', 'UserController@editUser');
+	Route::get('usuarios/delete/{id}', 'UserController@deleteUser');
 
 	Route::get('encuestas', function (){
     	return View::make('encuestas');

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,26 +7,28 @@
         <meta name="description" content="Sistema para la administración de alumnos egresados de la UTM">
         <meta name="author" content="Mictlan Software">
 
-        <link rel="shortcut icon" href="images/favicon.ico">
+        <link rel="shortcut icon" href="{{ asset("images/favicon.ico") }}" >
 
         <title>Sistema de administración</title>
         
-		<link rel="stylesheet" href="plugins/morris/morris.css">
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="css/core.css" rel="stylesheet" type="text/css" />
-        <link href="css/components.css" rel="stylesheet" type="text/css" />
-        <link href="css/icons.css" rel="stylesheet" type="text/css" />
-        <link href="css/pages.css" rel="stylesheet" type="text/css" />
-        <link href="css/menu.css" rel="stylesheet" type="text/css" />
-        <link href="css/responsive.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="{{ asset("plugins/morris/morris.css") }}">
+        <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/core.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/components.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/icons.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/pages.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/menu.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/responsive.css") }}" rel="stylesheet" type="text/css" />
         
         
-        <link href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-        <link href="plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-        <link href="plugins/select2/dist/css/select2.css" rel="stylesheet" type="text/css">
-        <link href="plugins/select2/dist/css/select2-bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="{{ asset("plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css") }}" rel="stylesheet">
+        <link href="{{ asset("plugins/bootstrap-daterangepicker/daterangepicker.css") }}" rel="stylesheet">
+        <link href="{{ asset("plugins/select2/dist/css/select2.css") }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset("plugins/select2/dist/css/select2-bootstrap.css") }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.css") }}" rel="stylesheet" type="text/css" />
+
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        
+
         
         
         <script src="js/modernizr.min.js"></script>
@@ -53,7 +56,7 @@
 
                             <li class="dropdown user-box">
                                 <a href="" class="dropdown-toggle waves-effect waves-light profile " data-toggle="dropdown" aria-expanded="true">
-                                    <img src="images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
+                                    <img src="{{ asset("images/users/avatar-1.jpg") }}" alt="user-img" class="img-circle user-img">
                                 </a>
 
                                 <ul class="dropdown-menu">
@@ -127,45 +130,30 @@
                                     <tr>
                                         <th>#</th>                                        
                                         <th>Nombre</th>
+                                        <th>Apellidos</th>
                                         <th>Correo electrónico</th>
-                                        <th>Fecha de nacimiento</th>
-                                        
-                                        <th>Acciones</th>
+                                        <th style="width: 150px">Acciones</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>                                        
-                                        <td>Daniel Alejandro Hernández Gómez</td>
-                                        <td>daniel@extjs.mx</td>
-                                        <td>29/04/2016</td>                                                     
+
+
+                                    @foreach( $users as $user )
+
+                                    <tr id="{{ "registro".$user->id }}">
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->nombre }}</td>
+                                        <td>{{ $user->apellidos  }}</td>
+                                        <td>{{$user->email}}</td>
                                         <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" data-toggle="modal" data-target="#modal-editar"> <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" > <i class="fa fa-trash"></i> </button>
+                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" data-toggle="modal" data-target="#modal-editar" onclick="loadUser({{ $user->id }})" > <i class="fa fa-pencil"></i> </button>
+                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="deleteUser({{ $user->id }})" > <i class="fa fa-trash"></i> </button>
                                         </td>
                                     </tr>
+
+                                    @endforeach
                                         
-                                        <tr>
-                                        <td>1</td>                                        
-                                        <td>Daniel Alejandro Hernández Gómez</td>
-                                        <td>daniel@extjs.mx</td>
-                                        <td>29/04/2016</td>                                                     
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" data-toggle="modal" data-target="#modal-editar"> <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" > <i class="fa fa-trash"></i> </button>
-                                        </td>
-                                    </tr>
-                                        
-                                        <tr>
-                                        <td>1</td>                                        
-                                        <td>Daniel Alejandro Hernández Gómez</td>
-                                        <td>daniel@extjs.mx</td>
-                                        <td>29/04/2016</td>                                                     
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" data-toggle="modal" data-target="#modal-editar"> <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" > <i class="fa fa-trash"></i> </button>
-                                        </td>
-                                    </tr>
+
                                                                        
                                     </tbody>
                                 </table>
@@ -222,45 +210,36 @@
                                         <div class="modal-body">
                                            
                                             
-                            <form class="form-horizontal" role="form" data-parsley-validate novalidate>               
-                            
+                            <form class="form-horizontal" role="form" data-parsley-validate novalidate action="{{url('/usuarios/new')}}" method="post" >
+
+                                {{ csrf_field() }}
+
                                 <div class="form-group">
                                     <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
                                     <div class="col-sm-7">
-                                        <input type="email" required parsley-type="email" class="form-control"
-                                               id="nombre" placeholder="Nombre...">
+                                        <input type="text" name="nombre" required class="form-control" id="nombre" placeholder="Nombre...">
                                     </div>
                                 </div>
                                                 
                                 <div class="form-group">
-                                    <label for="apellido_p" class="col-sm-4 control-label">Apellido Paterno: </label>
+                                    <label for="apellido_p" class="col-sm-4 control-label">Apellidos: </label>
                                     <div class="col-sm-7">
-                                        <input type="email" required parsley-type="email" class="form-control"
-                                               id="apellido_p" placeholder="Apellido Paterno...">
+                                        <input type="text" name = "apellidos" required class="form-control"  id="apellidos" placeholder="Apellidos...">
                                     </div>
                                 </div>
-                                                
-                                <div class="form-group">
-                                    <label for="apellido_m" class="col-sm-4 control-label">Apellido Materno: </label>
-                                    <div class="col-sm-7">
-                                        <input type="email" required parsley-type="email" class="form-control"
-                                               id="apellido_m" placeholder="Apellido Materno...">
-                                    </div>
-                                </div>
+
                                 
                                 <div class="form-group">
                                     <label for="usuario" class="col-sm-4 control-label">Correo Electrónico: </label>
                                     <div class="col-sm-7">
-                                        <input type="email" required parsley-type="email" class="form-control"
-                                               id="usuario" placeholder="Correo electrónico...">
+                                        <input type="email" name="email" required parsley-type="email" class="form-control" id="usuario" placeholder="Correo electrónico...">
                                     </div>
                                 </div>
                                                 
                                 <div class="form-group">
                                     <label for="hori-pass1" class="col-sm-4 control-label">Contraseña</label>
                                     <div class="col-sm-7">
-                                        <input id="hori-pass1" type="password" placeholder="Ingresa una contraseña fuerte" required
-                                               class="form-control">
+                                        <input id="password" type="password" name="password" placeholder="Ingresa una contraseña fuerte" required class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -278,9 +257,8 @@
                                         <button type="submit" class="btn btn-primary waves-effect waves-light">
                                             Agregar
                                         </button>
-                                        <button type="reset"
-                                                class="btn btn-default waves-effect waves-light m-l-5">
-                                            Cancelar
+                                        <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                            Limpiar
                                         </button>
                                     </div>
                                 </div>
@@ -290,31 +268,100 @@
                                     </div>
                                 </div>
                             </div><!-- /.modal -->
-        
-        
+
+
+
+
+        <div id="modal-editar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Editar Usuario</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+
+                        <form class="form-horizontal" role="form" data-parsley-validate novalidate action="{{url('/usuarios/edit')}}" method="post" >
+
+                            {{ csrf_field() }}
+
+
+
+                            <div class="form-group">
+                                    <input type="hidden" name="id" required class="form-control" id="ide" hidden >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
+                                <div class="col-sm-7">
+                                    <input type="text" name="nombre" required class="form-control" id="nombree" placeholder="Nombre...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellido_p" class="col-sm-4 control-label">Apellidos: </label>
+                                <div class="col-sm-7">
+                                    <input type="text" name = "apellidos" required class="form-control"  id="apellidose" placeholder="Apellidos...">
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="usuario" class="col-sm-4 control-label">Correo Electrónico: </label>
+                                <div class="col-sm-7">
+                                    <input type="email" name="email" required parsley-type="email" class="form-control" id="emaile" placeholder="Correo electrónico...">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group pull-right">
+                                <div>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                        Editar
+                                    </button>
+                                    <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
+
+
 
         <!-- jQuery  -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/detect.js"></script>
-        <script src="js/fastclick.js"></script>
-        <script src="js/jquery.slimscroll.js"></script>
-        <script src="js/jquery.blockUI.js"></script>
-        <script src="js/waves.js"></script>
-        <script src="js/wow.min.js"></script>
-        <script src="js/jquery.nicescroll.js"></script>
-        <script src="js/jquery.scrollTo.min.js"></script>
-        <script src="plugins/jquery-knob/jquery.knob.js"></script>
-		<script src="plugins/morris/morris.min.js"></script>
-		<script src="plugins/raphael/raphael-min.js"></script>
-        <script src="pages/jquery.dashboard.js"></script>
-        <script src="js/jquery.core.js"></script>
-        <script src="js/jquery.app.js"></script>
-        <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-        <script src="plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-        
-        <script src="plugins/select2/dist/js/select2.min.js" type="text/javascript"></script>
-         <script>
+        <script src="{{ asset("js/jquery.min.js") }}"></script>
+        <script src="{{ asset("js/bootstrap.min.js") }}"></script>
+        <script src="{{ asset("js/detect.js") }}"></script>
+        <script src="{{ asset("js/fastclick.js") }}"></script>
+        <script src="{{ asset("js/jquery.slimscroll.js") }}"></script>
+        <script src="{{ asset("js/jquery.blockUI.js") }}"></script>
+        <script src="{{ asset("js/waves.js") }}"></script>
+        <script src="{{ asset("js/wow.min.js") }}"></script>
+        <script src="{{ asset("js/jquery.nicescroll.js") }}"></script>
+        <script src="{{ asset("js/jquery.scrollTo.min.js") }}"></script>
+        <script src="{{ asset("plugins/jquery-knob/jquery.knob.js") }}"></script>
+		<script src="{{ asset("plugins/morris/morris.min.js") }}"></script>
+		<script src="{{ asset("plugins/raphael/raphael-min.js") }}"></script>
+        <script src="{{ asset("pages/jquery.dashboard.js") }}"></script>
+        <script src="{{ asset("js/jquery.core.js") }}"></script>
+        <script src="{{ asset("js/jquery.app.js") }}"></script>
+        <script src="{{ asset("plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js") }}"></script>
+        <script src="{{ asset("plugins/bootstrap-daterangepicker/daterangepicker.js") }}"></script>
+        <script src="{{ asset("plugins/select2/dist/js/select2.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.min.js") }}"></script>
+        <script src="{{ asset("pages/jquery.sweet-alert.init.js") }}"></script>
+
+        <script>
             jQuery(document).ready(function() {
                 $(".select2").select2();
             });
@@ -330,6 +377,77 @@
                 todayHighlight: true,
                  format: 'dd/mm/yyyy'
             });
+
+
+            function deleteUser( id ){
+
+                    swal({
+                        title: "Deseas Continuar?",
+                        text: "No podrás deshacer esto!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Sí, adelante!",
+                        cancelButtonText: "No, cancela!",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+
+
+                            $.get("usuarios/delete/"+id, function(data, status){
+
+                                if( status = "success"){
+
+                                    swal({  title:"Eliminado!" ,
+                                            text:"Hecho!",
+                                            type:"success"
+
+                                    } , function(){
+
+                                        location.reload();
+
+                                    });
+
+                                }
+
+                                else{
+                                    swal({  title:"Ups!" ,
+                                        text:"Hubo un problema!",
+                                        type:"error"
+
+                                    } , function(){
+
+                                        location.reload();
+
+                                    });
+                                }
+
+
+
+                            });
+
+
+
+
+
+                        }
+                    });
+
+            }
+
+
+            function loadUser( id ){
+
+                var record = document.getElementById("registro"+id);
+                document.getElementById('ide').value=record.childNodes[1].innerHTML;
+                document.getElementById('nombree').value=record.childNodes[3].innerHTML;
+                document.getElementById('apellidose').value=record.childNodes[5].innerHTML;
+                document.getElementById('emaile').value=record.childNodes[7].innerHTML;
+
+
+            }
+
         </script>
 
     </body>
