@@ -18,7 +18,7 @@
         <link href="css/pages.css" rel="stylesheet" type="text/css" />
         <link href="css/menu.css" rel="stylesheet" type="text/css" />
         <link href="css/responsive.css" rel="stylesheet" type="text/css" />
-        
+        <link href="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.css") }}" rel="stylesheet" type="text/css" />
         
         <link href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
         <link href="plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
@@ -128,7 +128,7 @@
                                 
                             </div>
 
-                            <h4 class="header-title m-t-0 m-b-30">Usuarios</h4>
+                            <h4 class="header-title m-t-0 m-b-30">Encuestas</h4>
 
                             <div >
                                 <table id="datatable" class="table table-striped table-bordered">
@@ -143,46 +143,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>DH23S</td>
-                                        <td>Encuesta Base</td>                                  
-                                        <td>Es una encuesta muy bonita!</td>
-                                        <td>www.xvideos.com/29873</td>
-                                        <td>María Luisa</td>                                        
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" > <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" > <i class="fa fa-trash"></i> </button>
-                                        </td>
-                                    </tr>
-                                        
-                                        <tr>
-                                        <td>DH23S</td>
-                                        <td>Encuesta Base</td>                                  
-                                        <td>Es una encuesta muy bonita!</td>
-                                        <td>www.xvideos.com/29873</td>
-                                        <td>María Luisa</td>                                        
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" > <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" > <i class="fa fa-trash"></i> </button>
-                                        </td>
-                                    </tr>
-                                        
-                                        <tr>
-                                        <td>DH23S</td>
-                                        <td>Encuesta Base</td>                                  
-                                        <td>Es una encuesta muy bonita!</td>
-                                        <td>www.xvideos.com/29873</td>
-                                        <td>María Luisa</td>                                        
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" > <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" > <i class="fa fa-trash"></i> </button>
-                                        </td>
-                                    </tr>
-                                          
-                                        
-                                   
-                                        
-                                        
+                                    @foreach($encuestas as $encuesta)
+                                        <tr id="registro{{$encuesta->id}}">
+                                            <td>{{$encuesta->codigo}}</td>
+                                            <td>{{$encuesta->nombre}}</td>                                  
+                                            <td>{{$encuesta->descripcion}}</td>
+                                            <td>{{$encuesta->link}}</td>
+                                            <td>{{$encuesta->id_usuario}}</td>                                        
+                                            <td>
+                                                <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="editEncuesta('{{$encuesta->id}}')"> <i class="fa fa-pencil"></i> </button>
+                                                <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEncuesta({{$encuesta->id}})"> <i class="fa fa-trash"></i> </button>
+                                            </td>
+                                        </tr>  
+                                    @endforeach                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -227,112 +200,127 @@
         
         
         
-        
-        <div id="modal-agregar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div id="modal-editar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title">Agregar Usuario</h4>
+                                            <h4 class="modal-title">Modificar información</h4>
                                         </div>
                                         <div class="modal-body">
-                                           
-                                            
-                            <form class="form-horizontal" role="form" data-parsley-validate novalidate>                                                                
-                                     
-                                <div class="form-group">
-                                    <label for="matricula" class="col-sm-4 control-label">Matrícula: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="matricula" placeholder="Matrícula...">
-                                    </div>
-                                </div>
-                            
-                                <div class="form-group">
-                                    <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="nombre" placeholder="Nombre...">
-                                    </div>
-                                </div>
+                                            <form class="form-horizontal" role="form" data-parsley-validate novalidate method="POST" action="encuestas/edit" >                                                                
+                                                {{csrf_field()}}
+                                                <input type="text" id="id-edit" name="id" hidden>
+                                                <div class="form-group">
+                                                    <label for="matricula" class="col-sm-4 control-label">Código: </label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="codigo" class="form-control"
+                                                               id="codigo-edit" placeholder="Código" >
+                                                    </div>
+                                                </div>
                                                 
-                                <div class="form-group">
-                                    <label for="apellido_p" class="col-sm-4 control-label">Apellido Paterno: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="apellido_p" placeholder="Apellido Paterno...">
-                                    </div>
-                                </div>
+                                                <div class="form-group">
+                                                    <label for="apellido_m" class="col-sm-4 control-label">Link</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="link" class="form-control"
+                                                               id="link-edit" placeholder="Link" >
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="nombre" class="form-control"
+                                                               id="nombre-edit" placeholder="Nombre" >
+                                                    </div>
+                                                </div>
+                                                                
+                                                <div class="form-group">
+                                                    <label for="apellido_p" class="col-sm-4 control-label">Descripción </label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="descripcion" class="form-control"
+                                                               id="descripcion-edit" placeholder="Descripción" >
+                                                    </div>
+                                                </div>
+                                                                
                                                 
-                                <div class="form-group">
-                                    <label for="apellido_m" class="col-sm-4 control-label">Apellido Materno: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="apellido_m" placeholder="Apellido Materno...">
-                                    </div>
-                                </div>
+                                                                
                                                 
-                                <div class="form-group">
-                                    <label for="correo" class="col-sm-4 control-label">Correo Electrónico: </label>
-                                    <div class="col-sm-7">
-                                        <input type="email" required parsley-type="email" class="form-control"
-                                               id="correo" placeholder="Correo Electrónico...">
+                                                                
+                                                <div class="form-group pull-right">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                            Agregar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>                                     
+                                        </div>
+                                        
                                     </div>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="anio_egreso" class="col-sm-4 control-label">Año de Egreso: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="anio_egreso" placeholder="Año de Egreso...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="municipio_procedencia" class="col-sm-4 control-label">Municipio de Procedencia: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="municipio_procedencia" placeholder="¿De Dónde Viene?...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="residencia_actual" class="col-sm-4 control-label">Residencia Actual: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="residencia_actual" placeholder="¿Dónde vive actualmente?...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="empleo_actual" class="col-sm-4 control-label">Empleo Actual: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="empleo_actual" placeholder="¿Dónde trabaja actualmente?...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="telefono" class="col-sm-4 control-label">Teléfono: </label>
-                                    <div class="col-sm-7">
-                                        <input type="text" required parsley-type="email" class="form-control"
-                                               id="telefono" placeholder="Número de teléfono...">
-                                    </div>
-                                </div>
-                                
+                            </div><!-- /.modal -->
+        
+                            <div id="modal-agregar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title">Agregar Encuesta</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal" role="form" data-parsley-validate novalidate method="POST" action="encuestas/new" >                                                                
+                                                {{csrf_field()}}
+
                                                 
-                                <div class="form-group pull-right">
-                                    <div>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                            Agregar
-                                        </button>
-                                        <button type="reset"
-                                                class="btn btn-default waves-effect waves-light m-l-5">
-                                            Cancelar
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>                                     
+                                                <div class="form-group">
+                                                    <label for="matricula" class="col-sm-4 control-label">Código: </label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="codigo" class="form-control"
+                                                               id="matricula" placeholder="Código" >
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label for="apellido_m" class="col-sm-4 control-label">Link</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="link" class="form-control"
+                                                               id="apellido_m" placeholder="Link" >
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="nombre" class="form-control"
+                                                               id="nombre" placeholder="Nombre" >
+                                                    </div>
+                                                </div>
+                                                                
+                                                <div class="form-group">
+                                                    <label for="apellido_p" class="col-sm-4 control-label">Descripción </label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" required name="descripcion" class="form-control"
+                                                               id="apellido_p" placeholder="Descripción" >
+                                                    </div>
+                                                </div>
+                                                                
+                                                
+                                                                
+                                                
+                                                                
+                                                <div class="form-group pull-right">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                            Agregar
+                                                        </button>
+                                                        <button type="reset"
+                                                                class="btn btn-default waves-effect waves-light m-l-5">
+                                                            Cancelar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>                                     
                                         </div>
                                         
                                     </div>
@@ -378,7 +366,10 @@
         <script src="plugins/datatables/dataTables.responsive.min.js"></script>
         <script src="plugins/datatables/responsive.bootstrap.min.js"></script>
         <script src="plugins/datatables/dataTables.scroller.min.js"></script>
+        
 
+        <script src="{{ asset("plugins/bootstrap-sweetalert/sweet-alert.min.js") }}"></script>
+        <script src="{{ asset("pages/jquery.sweet-alert.init.js") }}"></script>
         <!-- Datatable init js -->
         <script src="pages/datatables.init.js"></script>
         
@@ -400,6 +391,53 @@
                 todayHighlight: true,
                  format: 'dd/mm/yyyy'
             });
+
+        function deleteEncuesta(id)
+        {
+            swal({
+                title: "Estás seguro?",
+                text: "Esta acción no se puede deshacer",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Sí, continuar!",
+                cancelButtonText: "No, cancelar!",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                   
+                    $.ajax({
+                      type: "GET",
+                      url: "encuestas/delete/" + id,
+                      data: id,
+                      success: function(datos)
+                      {
+                         swal({ title: "El registro ha sido borrado", 
+                                text: "Haz click para continuar",
+                                type: "success"
+                                }, function () {
+                                     location.reload(); 
+                                });
+                      },
+                      dataType: "text"
+                    });
+                } 
+            });
+
+
+        }
+
+        function editEncuesta(id)
+        {
+            //alert(id);
+            var record = document.getElementById('registro' + id);
+            document.getElementById('id-edit').value=id;
+            document.getElementById('codigo-edit').value=record.childNodes[1].innerHTML;
+            document.getElementById('nombre-edit').value=record.childNodes[3].innerHTML;
+            document.getElementById('descripcion-edit').value=record.childNodes[5].innerHTML;
+            document.getElementById('link-edit').value=record.childNodes[7].innerHTML;
+        }
         </script>
 
     </body>
