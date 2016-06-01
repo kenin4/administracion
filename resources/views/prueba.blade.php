@@ -154,7 +154,9 @@
                                                         echo "<td>".$encuesta->codigo."</td>";
                                                         echo "<td>".$relacion->fecha_aplicacion."</td>";
                                                         echo "<td>".$relacion->fecha_proxima_aplicacion."</td>";
+
                                                         echo "<td>".$encuesta->usuario['nombre']."</td>";
+
                                                    }
                                                    
                                                 ?>
