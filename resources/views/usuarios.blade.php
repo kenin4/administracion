@@ -360,6 +360,7 @@
                                 <div class="tab-pane m-t-10 fade" id="tab1">
 
                                     <form  method="post" action="reporte/egresados" class="form-horizontal">
+                                        {{ csrf_field() }}
                                         <div class="row">
                                             <div class="form-group clearfix">
                                                 <label class="col-md-3 control-label " for="carrera">Carrera: </label>
@@ -436,6 +437,7 @@
 
                                 <div class="tab-pane m-t-10 fade" id="tab2">
                                     <form  method="post" action="reporte/empleadores" class="form-horizontal">
+                                        {{ csrf_field() }}
                                         <div class="row">
 
 
@@ -470,7 +472,7 @@
                                             <div class="form-group clearfix">
                                                 <label class="col-md-3 control-label " for="estado">Estado de la Encuesta: </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2 " id="estadoe" name="estado">
+                                                    <select class="form-control select2 " id="estadoe" name="status">
                                                         <option value="0"></option>
                                                         <option value="0">Todos</option>
                                                         <option value="1">Actualizado</option>

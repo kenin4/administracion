@@ -260,18 +260,21 @@
 
                         <div id="basicwizard" class=" pull-in">
                             <ul>
-                                <li><a href="#tab1" data-toggle="tab"><i class="fa fa-graduation-cap"></i> Egresados</a></li>
-                                <li><a href="#tab2" data-toggle="tab"><i class="fa fa-briefcase"></i> Empleadores</a></li>
+                                <li><a href="#tab5" data-toggle="tab"><i class="fa fa-graduation-cap"></i> Egresados</a></li>
+                                <li><a href="#tab6" data-toggle="tab"><i class="fa fa-briefcase"></i> Empleadores</a></li>
                             </ul>
                             <div class="tab-content b-0 m-b-0">
-                                <div class="tab-pane m-t-10 fade" id="tab1">
+                                <div class="tab-pane m-t-10 fade" id="tab5">
 
                                     <form  method="post" action="reporte/egresados" class="form-horizontal">
+
+                                        {{ csrf_field() }}
+
                                         <div class="row">
                                             <div class="form-group clearfix">
                                                 <label class="col-md-3 control-label " for="carrera">Carrera: </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2 " id="carrera" name="carrera">
+                                                    <select class="form-control select2 " id="carreraa" name="carrera">
                                                         <option value="0"></option>
                                                         <option value="0">Todas</option>
                                                         <option value="1">Ing. en Computación</option>
@@ -341,8 +344,11 @@
                                 </div>
 
 
-                                <div class="tab-pane m-t-10 fade" id="tab2">
+                                <div class="tab-pane m-t-10 fade" id="tab6">
                                     <form  method="post" action="reporte/empleadores" class="form-horizontal">
+
+                                        {{ csrf_field() }}
+
                                         <div class="row">
 
 
@@ -377,7 +383,7 @@
                                             <div class="form-group clearfix">
                                                 <label class="col-md-3 control-label " for="estado">Estado de la Encuesta: </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2 " id="estadoe" name="estado">
+                                                    <select class="form-control select2 " id="estadoee" name="status">
                                                         <option value="0"></option>
                                                         <option value="0">Todos</option>
                                                         <option value="1">Actualizado</option>
@@ -432,7 +438,7 @@
 
                             {{ csrf_field() }}
 
-                            <div id="progressbarwizard" class="pull-in" style="margin: 20px 0px">
+                            <div id="progressbarwizard" class="pull-in">
                                 <ul>
                                     <li><a href="#tab1" data-toggle="tab"><i class="fa fa-user"></i> Datos Personales</a></li>
                                     <li><a href="#tab2" data-toggle="tab"><i class="fa fa-home"></i> Dirección</a></li>
@@ -544,7 +550,7 @@
                                             <div class="form-group clearfix">
                                                 <label class="col-md-2 control-label " for="estado">Estado:</label>
                                                 <div class="col-md-10">
-                                                    <input class="form-control " id="estado" name="estado" type="text">
+                                                    <input class="form-control " id="estadoxx" name="estado" type="text">
                                                 </div>
                                             </div>
 
@@ -561,8 +567,8 @@
 
                                     <ul class="pager wizard">
 
-                                        <li class="previous" id="btnprev"><a href="#" class="btn btn-primary waves-effect waves-light">Anterior</a></li>
-                                        <li class="next" id="btnnext"><a href="#" class="btn btn-primary waves-effect waves-light">Siguiente</a></li>
+                                        <li class="previous" id="btnprev"><a  class="btn btn-primary waves-effect waves-light">Anterior</a></li>
+                                        <li class="next" id="btnnext"><a  class="btn btn-primary waves-effect waves-light">Siguiente</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -604,7 +610,7 @@
 
                             {{ csrf_field() }}
 
-                            <div id="progressbarwizard2" class="pull-in" style="margin: 20px 0px">
+                            <div id="progressbarwizard2" class="pull-in">
                                 <ul>
                                     <li><a href="#tab3" data-toggle="tab"><i class="fa fa-user"></i> Datos Personales</a></li>
                                     <li><a href="#tab4" data-toggle="tab"><i class="fa fa-home"></i> Dirección</a></li>
@@ -740,8 +746,8 @@
 
                                     <ul class="pager wizard">
 
-                                        <li class="previous" id="btnpreve"><a href="#" class="btn btn-primary waves-effect waves-light">Anterior</a></li>
-                                        <li class="next" id="btnnexte"><a href="#" class="btn btn-primary waves-effect waves-light">Siguiente</a></li>
+                                        <li class="previous" id="btnpreve"><a class="btn btn-primary waves-effect waves-light">Anterior</a></li>
+                                        <li class="next" id="btnnexte"><a class="btn btn-primary waves-effect waves-light">Siguiente</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -815,7 +821,6 @@
          <script>
             jQuery(document).ready(function() {
                 $(".select2").select2();
-                $(".select3").select2();
                 $('#datatable').dataTable();
                 $('form').parsley();
                 $('#basicwizard').bootstrapWizard({'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
@@ -958,7 +963,6 @@
                 document.getElementById('estadoe').value=record.childNodes[25].innerHTML;
                 document.getElementById('cpe').value=record.childNodes[27].innerHTML;
                 document.getElementById('notase').value=record.childNodes[31].innerHTML;
-
 
 
             }

@@ -54,7 +54,7 @@ class EmpleadorController extends Controller
         $empleador->colonia                  = $data->colonia;
         $empleador->delegacion               = $data->delegacion;
         $empleador->ciudad                   = $data->ciudad;
-        $empleador->estado                   = $data->estado;
+        $empleador->estado                   = strtoupper($data->estado);
         $empleador->cp                       = $data->cp;
         $empleador->notas                    = $data->notas;
 
@@ -87,7 +87,7 @@ class EmpleadorController extends Controller
         $empleador->colonia                  = $data->colonia;
         $empleador->delegacion               = $data->delegacion;
         $empleador->ciudad                   = $data->ciudad;
-        $empleador->estado                   = $data->estado;
+        $empleador->estado                   = strtoupper($data->estado);
         $empleador->cp                       = $data->cp;
         $empleador->notas                    = $data->notas;
 

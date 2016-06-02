@@ -50,6 +50,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('empleadores/delete/{id}', 'EmpleadorController@deleteEmpleador');
 
 
+	/*@autor : Ing. Daniel Alajandro Hernandez Gomez
+	 * ruta de reportes
+	 * */
+	Route::post('reporte/egresados', 'ReporteController@getReporteEgresado');
+	Route::post('reporte/empleadores', 'ReporteController@getReporteEmpleador');
+
+
 
 });  
 
