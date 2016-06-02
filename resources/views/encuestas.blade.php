@@ -156,7 +156,7 @@
                                             <td>{{$encuesta->nombre}}</td>
                                             <td>{{$encuesta->descripcion}}</td>
                                             <td>{{$encuesta->link}}</td>
-                                            <td>{{$encuesta->usuario}}</td>
+                                            <td>{{$encuesta->usuario['nombre']}}</td>
                                             <td>
                                                 <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="editEncuesta('{{$encuesta->id}}')"> <i class="fa fa-pencil"></i> </button>
                                                 <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEncuesta({{$encuesta->id}})"> <i class="fa fa-trash"></i> </button>

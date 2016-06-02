@@ -114,6 +114,7 @@
                 <div class="row" style="padding: 30px 0px;">
 
                     <div class="col-md-12">
+
                         <div class="card-box">
                             <div class="pull-right">
                                 <button type="button" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5" data-toggle="modal" data-target="#modal-responsivo" > <i class="fa fa-plus"></i> Agregar Registro</button>
@@ -138,6 +139,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+
+
                                     @foreach($egresados as $egresado )
                                         
                                             @foreach($egresado->encuestas as $encuesta)
