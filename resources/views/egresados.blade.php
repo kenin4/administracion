@@ -103,6 +103,13 @@
                             <li class="active">
                                 <a href="egresados"><i class="fa fa-graduation-cap"></i> <span> Egresados </span> </a>
                             </li>
+                            <li>
+                                <a href="empleadores"><i class="fa fa-briefcase"></i> <span> Empleadores </span> </a>
+                            </li>
+
+                            <li>
+                                <a type="button"  data-toggle="modal" data-target="#modal-reporte"><i class="fa fa-line-chart"></i> <span> Generador de Reportes </span> </a>
+                            </li>
                         </ul>
                         <!-- End navigation menu  -->
                     </div>
@@ -192,21 +199,8 @@
                 <footer class="footer text-right">
                     <div class="container">
                         <div class="row">
-                            <div class="col-xs-6">
-                                2016 © Mictlán Software.
-                            </div>
-                            <div class="col-xs-6">
-                                <ul class="pull-right list-inline m-b-0">
-                                    <li>
-                                        <a href="#">Nosotros</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ayuda</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Contacto</a>
-                                    </li>
-                                </ul>
+                            <div class="col-md-12 pull-right">
+                                Hecho con <i class="fa fa-heart" style="color:red"></i> por Mictlán Software © 2016.
                             </div>
                         </div>
                     </div>
@@ -464,6 +458,173 @@
         </div><!-- /.modal -->
 
 
+
+        <div id="modal-reporte" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><i class="fa fa-pie-chart" aria-hidden="true"></i> Generar Reporte</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+
+
+                        <div id="basicwizard" class=" pull-in">
+                            <ul>
+                                <li><a href="#tab1" data-toggle="tab"><i class="fa fa-graduation-cap"></i> Egresados</a></li>
+                                <li><a href="#tab2" data-toggle="tab"><i class="fa fa-briefcase"></i> Empleadores</a></li>
+                            </ul>
+                            <div class="tab-content b-0 m-b-0">
+                                <div class="tab-pane m-t-10 fade" id="tab1">
+
+                                    <form  method="post" action="reporte/egresados" class="form-horizontal">
+                                        <div class="row">
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="carrera">Carrera: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="carrera" name="carrera">
+                                                        <option value="0"></option>
+                                                        <option value="0">Todas</option>
+                                                        <option value="1">Ing. en Computación</option>
+                                                        <option value="2">Ing. en Electrónica</option>
+                                                        <option value="3">Ing. en Mecatrónica</option>
+                                                        <option value="4">Ing. en Diseño</option>
+                                                        <option value="5">Ing. Indistrial</option>
+                                                        <option value="6">Lic. Ciencias Empresariales</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="generoe" name="genero">
+                                                        <option value="-1"></option>
+                                                        <option value="-1">Ambos</option>
+                                                        <option value="1">Hombre</option>
+                                                        <option value="0">Mujer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
+                                                <div class="col-md-9">
+                                                    <input id="anio_aplicacion" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="anio_egreso"> Año de Egreso:</label>
+                                                <div class="col-md-9">
+                                                    <input id="anio_egreso" name="anio_egreso" type="number" data-parsley-type="integer" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta:  </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="estado" name="estado">
+                                                        <option value="0"></option>
+                                                        <option value="0">Todos</option>
+                                                        <option value="1">Actualizado</option>
+                                                        <option value="2">Vencido</option>
+                                                        <option value="3">Próximo a Vencer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="form-group pull-right" >
+                                            <div>
+                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
+                                                    Generar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+                                <div class="tab-pane m-t-10 fade" id="tab2">
+                                    <form  method="post" action="reporte/empleadores" class="form-horizontal">
+                                        <div class="row">
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="generoem" name="genero">
+                                                        <option value="-1"></option>
+                                                        <option value="-1">Ambos</option>
+                                                        <option value="1">Hombre</option>
+                                                        <option value="0">Mujer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="esatdo"> Estado:</label>
+                                                <div class="col-md-9">
+                                                    <input id="esatdo" name="estado" type="text" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
+                                                <div class="col-md-9">
+                                                    <input id="anio_aplicacione" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="estadoe" name="estado">
+                                                        <option value="0"></option>
+                                                        <option value="0">Todos</option>
+                                                        <option value="1">Actualizado</option>
+                                                        <option value="2">Vencido</option>
+                                                        <option value="3">Próximo a Vencer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="form-group pull-right" >
+                                            <div>
+                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
+                                                    Generar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
+
         <!-- jQuery  -->
         <script src="{{ asset("js/jquery.min.js") }}"></script>
         <script src="{{ asset("js/bootstrap.min.js") }}"></script>
@@ -507,6 +668,9 @@
         <!--Validacion de los formularios -->
         <script type="text/javascript" src="{{ asset("plugins/parsleyjs/dist/parsley.min.js") }}"></script>
 
+        <!--  wizards  -->
+        <script src="{{ asset("plugins/bootstrap-wizard/jquery.bootstrap.wizard.js") }}"></script>
+
         <!-- Datatable init js -->
         <script src="{{ asset("pages/datatables.init.js") }}"></script>
         
@@ -515,6 +679,8 @@
                 $(".select2").select2();
                 $('#datatable').dataTable();
                 $('form').parsley();
+                $('#basicwizard').bootstrapWizard({'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
+
                 
             });
              

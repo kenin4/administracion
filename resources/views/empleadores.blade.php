@@ -100,9 +100,17 @@
                             <li>
                                 <a href="encuestas"><i class="fa fa-book"></i> <span> Encuestas </span> </a>
                             </li>
-                            <li class="active">
+                            <li>
                                 <a href="egresados"><i class="fa fa-graduation-cap"></i> <span> Egresados </span> </a>
                             </li>
+                            <li class="active">
+                                <a href="empleadores"><i class="fa fa-briefcase"></i> <span> Empleadores </span> </a>
+                            </li>
+
+                            <li>
+                                <a type="button"  data-toggle="modal" data-target="#modal-reporte"><i class="fa fa-line-chart"></i> <span> Generador de Reportes </span> </a>
+                            </li>
+
                         </ul>
                         <!-- End navigation menu  -->
                     </div>
@@ -124,53 +132,74 @@
                     <div class="col-md-12">
                         <div class="card-box">
                             <div class="pull-right">
-                                <button type="button" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5" data-toggle="modal" data-target="#modal-agregar" > <i class="fa fa-plus"></i> Agregar Egresado</button>
+                                <button type="button" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5" data-toggle="modal" data-target="#modal-agregar" > <i class="fa fa-plus"></i> Agregar Empleador</button>
                                                                                             
                                 
                             </div>
 
-                            <h4 class="header-title m-t-0 m-b-30">Egresados</h4>
+                            <h4 class="header-title m-t-0 m-b-30">Empleadores</h4>
 
                             <div >
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>Matrícula</th>
                                         <th>Nombre</th>
+                                        <th>Género</th>
+                                        <th hidden>Nombre</th>
                                         <th hidden>Apellidos</th>
-                                        <th>Carrera</th>
                                         <th>Correo electrónico</th>
-                                        <th>Año de Egreso</th>
-                                        <th>Municipio de Procedencia</th>
-                                        <th>Recidencia Actual</th>
-                                        <th>Empleo Actual</th>
                                         <th>Teléfono</th>
+                                        <th hidden>calle</th>
+                                        <th hidden>numero_int</th>
+                                        <th hidden>numero_ext</th>
+                                        <th hidden>colonia</th>
+                                        <th hidden>delegacion</th>
+                                        <th hidden>ciudad</th>
+                                        <th hidden>estado</th>
+                                        <th hidden>cp</th>
+                                        <th style="width: 250px">Dirección</th>
+                                        <th>Comentarios</th>
                                         <th>Acciones</th>
-                                        <th hidden>Apellidos</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
 
 
-                                    @foreach( $egresados as $egresado )
+                                    @foreach( $empleadores as $empleador )
 
-                                     <tr id="{{"registro".$egresado->id}}">
-                                        <td>{{ $egresado->matricula }}</td>
-                                        <td>{{ $egresado->nombre." ".$egresado->apellidos }}</td>
-                                         <td hidden>{{ $egresado->apellidos }}</td>
-                                        <td>{{ $egresado->carrera }}</td>
-                                        <td>{{ $egresado->correo }}</td>
-                                        <td>{{ $egresado->fecha_graduacion }}</td>
-                                        <td>{{ $egresado->municipio_procedencia }}</td>
-                                        <td>{{ $egresado->residencia_actual }}</td>
-                                        <td>{{ $egresado->empleo_actual }}</td>
-                                        <td>{{ $egresado->telefono }}</td>
-                                        <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="loadEgresado( {{ $egresado->id }}) " > <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEgresado({{ $egresado->id }})"> <i class="fa fa-trash"></i> </button>
+
+                                     <tr id="{{"registro".$empleador->id}}">
+
+                                         <td>{{ $empleador->nombre." ".$empleador->apellidos }}</td>
+                                         <td>{{ $empleador->genero == 1 ? "Hombre" : "Mujer" }}</td>
+                                         <td hidden>{{ $empleador->nombre }}</td>
+                                         <td hidden>{{ $empleador->apellidos }}</td>
+                                         <td>{{ $empleador->correo }}</td>
+                                         <td>{{ $empleador->telefono }}</td>
+                                         <td hidden>{{ $empleador->calle }}</td>
+                                         <td hidden>{{ $empleador->numero_int }}</td>
+                                         <td hidden>{{ $empleador->numero_ext }}</td>
+                                         <td hidden>{{ $empleador->colonia }}</td>
+                                         <td hidden>{{ $empleador->delegacion }}</td>
+                                         <td hidden>{{ $empleador->ciudad }}</td>
+                                         <td hidden>{{ $empleador->estado }}</td>
+                                         <td hidden>{{ $empleador->cp }}</td>
+                                         <td>{{
+                                                 (empty($empleador->calle )?"":$empleador->calle).
+                                                 (empty( $empleador->numero_int )? "":" # ".$empleador->numero_int)." ".(empty( $empleador->numero_ext )? "":"Int. ".$empleador->numero_ext.",").
+                                                 (empty( $empleador->colonia )? "":" Col. ".$empleador->colonia.",").
+                                                 (empty( $empleador->delegacion )? "":" Del. ".$empleador->delegacion.",").
+                                                 (empty( $empleador->ciudad )? "":" ".$empleador->ciudad.",").
+                                                 (empty( $empleador->estado )? "":" ".$empleador->estado.",").
+                                                 (empty( $empleador->cp )? "":" Cp: ".$empleador->cp)
+                                             }}
+                                         </td>
+                                         <td>{{ $empleador->notas }}</td>
+                                         <td>
+                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="loadEmpleador( {{ $empleador->id }}) " > <i class="fa fa-pencil"></i> </button>
+                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEmpleador({{ $empleador->id }})"> <i class="fa fa-trash"></i> </button>
                                         </td>
-                                         <td hidden>{{ $egresado->nombre }}</td>
                                     </tr>
 
                                     @endforeach
@@ -188,25 +217,20 @@
                 <!-- end row -->
 
 
+
+
+
+
+
+
+
+
                 <!-- Footer -->
-                <footer class="footer text-right">
+                <footer class="footer">
                     <div class="container">
                         <div class="row">
-                            <div class="col-xs-6">
-                                2016 © Mictlán Software.
-                            </div>
-                            <div class="col-xs-6">
-                                <ul class="pull-right list-inline m-b-0">
-                                    <li>
-                                        <a href="#">Nosotros</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ayuda</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Contacto</a>
-                                    </li>
-                                </ul>
+                            <div class="col-xs-12 pull-right">
+                                Hecho con <i class="fa fa-heart" style="color:red"></i> por Mictlán Software © 2016.
                             </div>
                         </div>
                     </div>
@@ -219,243 +243,518 @@
 
         </div>
 
-        
-        
-        
-        
+
+        <div id="modal-reporte" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><i class="fa fa-pie-chart" aria-hidden="true"></i> Generar Reporte</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+
+
+                        <div id="basicwizard" class=" pull-in">
+                            <ul>
+                                <li><a href="#tab1" data-toggle="tab"><i class="fa fa-graduation-cap"></i> Egresados</a></li>
+                                <li><a href="#tab2" data-toggle="tab"><i class="fa fa-briefcase"></i> Empleadores</a></li>
+                            </ul>
+                            <div class="tab-content b-0 m-b-0">
+                                <div class="tab-pane m-t-10 fade" id="tab1">
+
+                                    <form  method="post" action="reporte/egresados" class="form-horizontal">
+                                        <div class="row">
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="carrera">Carrera: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="carrera" name="carrera">
+                                                        <option value="0"></option>
+                                                        <option value="0">Todas</option>
+                                                        <option value="1">Ing. en Computación</option>
+                                                        <option value="2">Ing. en Electrónica</option>
+                                                        <option value="3">Ing. en Mecatrónica</option>
+                                                        <option value="4">Ing. en Diseño</option>
+                                                        <option value="5">Ing. Indistrial</option>
+                                                        <option value="6">Lic. Ciencias Empresariales</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="generoe" name="genero">
+                                                        <option value="-1"></option>
+                                                        <option value="-1">Ambos</option>
+                                                        <option value="1">Hombre</option>
+                                                        <option value="0">Mujer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
+                                                <div class="col-md-9">
+                                                    <input id="anio_aplicacion" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="anio_egreso"> Año de Egreso:</label>
+                                                <div class="col-md-9">
+                                                    <input id="anio_egreso" name="anio_egreso" type="number" data-parsley-type="integer" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta:  </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="estado" name="estado">
+                                                        <option value="0"></option>
+                                                        <option value="0">Todos</option>
+                                                        <option value="1">Actualizado</option>
+                                                        <option value="2">Vencido</option>
+                                                        <option value="3">Próximo a Vencer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="form-group pull-right" >
+                                            <div>
+                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
+                                                    Generar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+                                <div class="tab-pane m-t-10 fade" id="tab2">
+                                    <form  method="post" action="reporte/empleadores" class="form-horizontal">
+                                        <div class="row">
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="generoem" name="genero">
+                                                        <option value="-1"></option>
+                                                        <option value="-1">Ambos</option>
+                                                        <option value="1">Hombre</option>
+                                                        <option value="0">Mujer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="esatdo"> Estado:</label>
+                                                <div class="col-md-9">
+                                                    <input id="esatdo" name="estado" type="text" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
+                                                <div class="col-md-9">
+                                                    <input id="anio_aplicacione" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta: </label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 " id="estadoe" name="estado">
+                                                        <option value="0"></option>
+                                                        <option value="0">Todos</option>
+                                                        <option value="1">Actualizado</option>
+                                                        <option value="2">Vencido</option>
+                                                        <option value="3">Próximo a Vencer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="form-group pull-right" >
+                                            <div>
+                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
+                                                    Generar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
+
+
+
+
+
+
         <div id="modal-agregar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title">Agregar Egresado</h4>
+
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Agregar Empleador</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <form class="form-horizontal" role="form" data-parsley-validate novalidate action="empleadores/new" method="post">
+
+
+                            {{ csrf_field() }}
+
+                            <div id="progressbarwizard" class="pull-in" style="margin: 20px 0px">
+                                <ul>
+                                    <li><a href="#tab1" data-toggle="tab"><i class="fa fa-user"></i> Datos Personales</a></li>
+                                    <li><a href="#tab2" data-toggle="tab"><i class="fa fa-home"></i> Dirección</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+
+                                    <div id="bar" class="progress progress-striped progress-bar-primary-alt active">
+                                        <div class="bar progress-bar progress-bar-primary"></div>
+                                    </div>
+
+                                    <div class="tab-pane p-t-10 fade" id="tab1">
+                                        <div class="row">
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="nombre">Nombre *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="nombre" name="nombre" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="apellidos">Apellidos *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="apellidos" name="apellidos" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="genero">Género *</label>
+                                                <div class="col-md-9">
+
+                                                    <select class="form-control select2 required" id="genero" name="genero">
+                                                        <option value="1">Hombre</option>
+                                                        <option value="0">Mujer</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="email">Email*</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="email" name="email" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="telefono">Teléfono:</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control " id="telefono" name="telefono" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="notas">Comentarios:</label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" maxlength="225" rows="2" placeholder="Agrega algún comentario..." name="notas"></textarea>
+                                                </div>
+                                            </div>
+
+
                                         </div>
-                                        <div class="modal-body">
-                                           
-                                            
-                            <form class="form-horizontal" role="form" data-parsley-validate novalidate action="egresados/new" method="post">
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab2">
+                                        <div class="row">
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="calle">Calle:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="calle" name="calle" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="numero_int">Num. Int:</label>
+                                                <div class="col-md-4">
+                                                    <input class="form-control " id="numero_int" name="numero_int" type="text">
+                                                </div>
+                                                <label class="col-md-2 control-label " for="numero_ext">Num. Ext:</label>
+                                                <div class="col-md-4">
+                                                    <input class="form-control " id="numero_ext" name="numero_ext" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="colonia">Colonia:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="colonia" name="colonia" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="delegacion">Delegación: </label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="delegacion" name="delegacion" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="ciudad">Ciudad:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="ciudad" name="ciudad" type="text">
+                                                </div>
+                                            </div>
 
 
-                                {{ csrf_field() }}
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="estado">Estado:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="estado" name="estado" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="cp">CP:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="cp" name="cp" type="text">
+                                                </div>
+                                            </div>
 
 
-                                <div class="form-group">
-                                    <label for="matricula" class="col-sm-4 control-label">Matrícula: </label>
-                                    <div class="col-sm-7">
-                                        <input  parsley-trigger="change" required type="text" name = "matricula" class="form-control" id="matricula" placeholder="Matrícula...">
-                                    </div>
-                                </div>
-                            
-                                <div class="form-group">
-                                    <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text"  class="form-control" name = "nombre"
-                                               id="nombre" placeholder="Nombre...">
-                                    </div>
-                                </div>
-                                                
-                                <div class="form-group">
-                                    <label for="apellidos" class="col-sm-4 control-label">Apellidos: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text"  class="form-control" name="apellidos"
-                                               id="apellidos" placeholder="Apellidos...">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="carrera" class="col-sm-4 control-label">Carrera: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text"  class="form-control" name="carrera"
-                                               id="carrera" placeholder="Carrera...">
-                                    </div>
-                                </div>
-                                                
-                                <div class="form-group">
-                                    <label for="correo" class="col-sm-4 control-label">Correo Electrónico: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required parsley-type="email" type="email" class="form-control" name="correo"
-                                               id="correo" placeholder="Correo Electrónico...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="anio_egreso" class="col-sm-4 control-label">Año de Egreso: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text" class="form-control" name="fecha_graduacion"
-                                               id="anio_egreso" placeholder="Año de egreso...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="municipio_procedencia" class="col-sm-4 control-label">Municipio de Procedencia: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text" class="form-control" name="municipio"
-                                               id="municipio_procedencia" placeholder="¿De Dónde Viene?...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="residencia_actual" class="col-sm-4 control-label">Residencia Actual: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text"  class="form-control" name="residencia_actual"
-                                               id="residencia_actual" placeholder="¿Dónde vive actualmente?...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="empleo_actual" class="col-sm-4 control-label">Empleo Actual: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text"  class="form-control" name="empleo_actual"
-                                               id="empleo_actual" placeholder="¿Dónde trabaja actualmente?...">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="telefono" class="col-sm-4 control-label">Teléfono: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text"  class="form-control" name="telefono"
-                                               id="telefono" placeholder="Número de teléfono...">
-                                    </div>
-                                </div>
-                                
-                                                
-                                <div class="form-group pull-right">
-                                    <div>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                            Agregar
-                                        </button>
-                                        <button type="reset"
-                                                class="btn btn-default waves-effect waves-light m-l-5">
-                                            Limpiar
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>                                     
                                         </div>
-                                        
                                     </div>
+
+                                    <ul class="pager wizard">
+
+                                        <li class="previous" id="btnprev"><a href="#" class="btn btn-primary waves-effect waves-light">Anterior</a></li>
+                                        <li class="next" id="btnnext"><a href="#" class="btn btn-primary waves-effect waves-light">Siguiente</a></li>
+                                    </ul>
                                 </div>
-                            </div><!-- /.modal -->
+                            </div>
+
+
+                            <div class="form-group pull-right" >
+                                <div>
+                                    <button id="btnagregar" type="submit" class="btn btn-primary waves-effect waves-light">
+                                        Agregar
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /.modal -->
 
 
 
 
 
         <div id="modal-editar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">Editar Egresado</h4>
+                        <h4 class="modal-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Editar Empleador</h4>
                     </div>
                     <div class="modal-body">
 
 
-                        <form class="form-horizontal" role="form" data-parsley-validate novalidate action="egresados/edit" method="post">
+                        <form class="form-horizontal" role="form" data-parsley-validate novalidate action="empleadores/edit" method="post">
 
 
                             {{ csrf_field() }}
 
+                            <div id="progressbarwizard2" class="pull-in" style="margin: 20px 0px">
+                                <ul>
+                                    <li><a href="#tab3" data-toggle="tab"><i class="fa fa-user"></i> Datos Personales</a></li>
+                                    <li><a href="#tab4" data-toggle="tab"><i class="fa fa-home"></i> Dirección</a></li>
+                                </ul>
 
-                            <div class="form-group">
-                                <div class="col-sm-7">
-                                    <input type="hidden" name = "id" class="form-control" hidden
-                                           id="id">
+                                <div class="tab-content">
+
+                                    <div id="bar" class="progress progress-striped progress-bar-primary-alt active">
+                                        <div class="bar progress-bar progress-bar-primary"></div>
+                                    </div>
+
+                                    <div class="tab-pane p-t-10 fade" id="tab3">
+                                        <div class="row">
+
+                                            <div class="form-group">
+                                                <div class="col-sm-7">
+                                                    <input type="hidden" name = "id" class="form-control" hidden
+                                                           id="id">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="nombre">Nombre *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="nombree" name="nombre" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="apellidos">Apellidos *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="apellidose" name="apellidos" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="generoe">Género *</label>
+                                                <div class="col-md-9">
+
+                                                    <select class="form-control select3 required" id="generoe" name="genero">
+                                                        <option value="1">Hombre</option>
+                                                        <option value="0">Mujer</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="email">Email*</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="emaile" name="email" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="telefono">Teléfono:</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control " id="telefonoe" name="telefono" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="notas">Comentarios:</label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" maxlength="225" rows="2" placeholder="Agrega algún comentario..." name="notas" id="notase"></textarea>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="tab4">
+                                        <div class="row">
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="calle">Calle:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="callee" name="calle" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="numero_int">Num. Int:</label>
+                                                <div class="col-md-4">
+                                                    <input class="form-control " id="numero_inte" name="numero_int" type="text">
+                                                </div>
+                                                <label class="col-md-2 control-label " for="numero_ext">Num. Ext:</label>
+                                                <div class="col-md-4">
+                                                    <input class="form-control " id="numero_exte" name="numero_ext" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="colonia">Colonia:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="coloniae" name="colonia" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="delegacion">Delegación: </label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="delegacione" name="delegacion" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="ciudad">Ciudad:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="ciudade" name="ciudad" type="text">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="estado">Estado:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="estadoe" name="estado" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-2 control-label " for="cp">CP:</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control " id="cpe" name="cp" type="text">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <ul class="pager wizard">
+
+                                        <li class="previous" id="btnpreve"><a href="#" class="btn btn-primary waves-effect waves-light">Anterior</a></li>
+                                        <li class="next" id="btnnexte"><a href="#" class="btn btn-primary waves-effect waves-light">Siguiente</a></li>
+                                    </ul>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="matriculae" class="col-sm-4 control-label">Matrícula: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text" name = "matricula" class="form-control"
-                                           id="matriculae" placeholder="Matrícula...">
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="nombree" class="col-sm-4 control-label">Nombre: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text"  class="form-control" name = "nombre"
-                                           id="nombree" placeholder="Nombre...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="apellidose" class="col-sm-4 control-label">Apellidos: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text"  class="form-control" name="apellidos"
-                                           id="apellidose" placeholder="Apellidos...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="carrerae" class="col-sm-4 control-label">Carrera: </label>
-                                <div class="col-sm-7">
-                                    <input  parsley-trigger="change" required type="text"  class="form-control" name="carrera"
-                                           id="carrerae" placeholder="Carrera...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="correoe" class="col-sm-4 control-label">Correo Electrónico: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required parsley-type="email" type="email" class="form-control" name="correo"
-                                           id="correoe" placeholder="Correo Electrónico...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="anio_egresoe" class="col-sm-4 control-label">Año de Egreso: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text" class="form-control" name="fecha_graduacion"
-                                           id="anio_egresoe" placeholder="Año de egreso...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="municipio_procedenciae" class="col-sm-4 control-label">Municipio de Procedencia: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text" class="form-control" name="municipio"
-                                           id="municipio_procedenciae" placeholder="¿De Dónde Viene?...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="residencia_actuale" class="col-sm-4 control-label">Residencia Actual: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text"  class="form-control" name="residencia_actual"
-                                           id="residencia_actuale" placeholder="¿Dónde vive actualmente?...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="empleo_actuale" class="col-sm-4 control-label">Empleo Actual: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text"  class="form-control" name="empleo_actual"
-                                           id="empleo_actuale" placeholder="¿Dónde trabaja actualmente?...">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telefonoe" class="col-sm-4 control-label">Teléfono: </label>
-                                <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text"  class="form-control" name="telefono"
-                                           id="telefonoe" placeholder="Número de teléfono...">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group pull-right">
+                            <div class="form-group pull-right" >
                                 <div>
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                    <button id="btnagregare" type="submit" class="btn btn-primary waves-effect waves-light">
                                         Editar
                                     </button>
-                                    <button type="reset"
-                                            class="btn btn-default waves-effect waves-light m-l-5">
-                                        Limpiar
-                                    </button>
                                 </div>
                             </div>
+
                         </form>
                     </div>
 
@@ -507,32 +806,81 @@
         <!--Validacion de los formularios -->
         <script type="text/javascript" src="{{ asset("plugins/parsleyjs/dist/parsley.min.js") }}"></script>
 
+        <!--  wizards  -->
+        <script src="{{ asset("plugins/bootstrap-wizard/jquery.bootstrap.wizard.js") }}"></script>
+
         <!-- Datatable init js -->
         <script src="{{ asset("pages/datatables.init.js") }}"></script>
         
          <script>
             jQuery(document).ready(function() {
                 $(".select2").select2();
+                $(".select3").select2();
                 $('#datatable').dataTable();
                 $('form').parsley();
+                $('#basicwizard').bootstrapWizard({'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
+
+
+                $('#progressbarwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+                    var $total = navigation.find('li').length;
+                    var $current = index+1;
+                    var $percent = ($current/$total) * 100;
+                    $('#progressbarwizard').find('.bar').css({width:$percent+'%'});
+
+                    if( $current == 1 ){
+
+                        $('#btnnext').css({display:'block'});
+                        $('#btnprev').css({display:'none'});
+                        $('#btnagregar').css({display:'none'});
+                    }
+
+
+                    if( $current == 2 ){
+                        $('#btnnext').css({display:'none'});
+                        $('#btnprev').css({display:'block'});
+                        $('#btnagregar').css({display:'block'});
+                    }
+
+
+
+                }, 'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
+
+
+                $('#progressbarwizard2').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+                    var $total = navigation.find('li').length;
+                    var $current = index+1;
+                    var $percent = ($current/$total) * 100;
+                    $('#progressbarwizard2').find('.bar').css({width:$percent+'%'});
+
+                    if( $current == 1 ){
+
+                        $('#btnnexte').css({display:'block'});
+                        $('#btnpreve').css({display:'none'});
+                        $('#btnagregare').css({display:'none'});
+                    }
+
+
+                    if( $current == 2 ){
+                        $('#btnnexte').css({display:'none'});
+                        $('#btnpreve').css({display:'block'});
+                        $('#btnagregare').css({display:'block'});
+                    }
+
+
+
+                }, 'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
+
+
+
+
                 
             });
              
-            jQuery('#datepicker').datepicker();
-            jQuery('#datepicker-autoclose').datepicker({
-                autoclose: true,
-                todayHighlight: true,
-                format: 'dd/mm/yyyy'
-            });
-             jQuery('#datepicker-autoclose2').datepicker({
-                autoclose: true,
-                todayHighlight: true,
-                 format: 'dd/mm/yyyy'
-            });
 
 
 
-            function deleteEgresado( id ){
+
+            function deleteEmpleador( id ){
 
                 swal({
                     title: "Deseas Continuar?",
@@ -549,9 +897,7 @@
 
                         console.log( "presionado ");
 
-                        $.get("egresados/delete/"+id, function(data, status){
-
-                            console.log(  status );
+                        $.get("empleadores/delete/"+id, function(data, status){
 
 
                             if( status = "success"){
@@ -594,20 +940,24 @@
             }
 
 
-            function loadEgresado( id ){
+            function loadEmpleador( id ){
 
                 var record = document.getElementById("registro"+id);
                 document.getElementById('id').value = id;
-                document.getElementById('matriculae').value=record.childNodes[1].innerHTML;
-                document.getElementById('nombree').value=record.childNodes[23].innerHTML;
-                document.getElementById('apellidose').value=record.childNodes[5].innerHTML;
-                document.getElementById('carrerae').value=record.childNodes[7].innerHTML;
-                document.getElementById('correoe').value=record.childNodes[9].innerHTML;
-                document.getElementById('anio_egresoe').value=record.childNodes[11].innerHTML;
-                document.getElementById('municipio_procedenciae').value=record.childNodes[13].innerHTML;
-                document.getElementById('residencia_actuale').value=record.childNodes[15].innerHTML;
-                document.getElementById('empleo_actuale').value=record.childNodes[17].innerHTML;
-                document.getElementById('telefonoe').value=record.childNodes[19].innerHTML;
+                document.getElementById('nombree').value=record.childNodes[5].innerHTML;
+                document.getElementById('apellidose').value=record.childNodes[7].innerHTML;
+                document.getElementById('generoe').value = record.childNodes[3].innerHTML == "Hombre" ? 1 : 0;
+                document.getElementById('emaile').value=record.childNodes[9].innerHTML;
+                document.getElementById('telefonoe').value=record.childNodes[11].innerHTML;
+                document.getElementById('callee').value=record.childNodes[13].innerHTML;
+                document.getElementById('numero_inte').value=record.childNodes[15].innerHTML;
+                document.getElementById('numero_exte').value=record.childNodes[17].innerHTML;
+                document.getElementById('coloniae').value=record.childNodes[19].innerHTML;
+                document.getElementById('delegacione').value=record.childNodes[21].innerHTML;
+                document.getElementById('ciudade').value=record.childNodes[23].innerHTML;
+                document.getElementById('estadoe').value=record.childNodes[25].innerHTML;
+                document.getElementById('cpe').value=record.childNodes[27].innerHTML;
+                document.getElementById('notase').value=record.childNodes[31].innerHTML;
 
 
 

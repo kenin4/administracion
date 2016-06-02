@@ -33,17 +33,21 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('encuestas/delete/{id}','EncuestaController@deleteEncuesta');
 	Route::post('encuestas/edit','EncuestaController@editEncuesta');
 
-
-
 	Route::post('bind','RelacionController@bind');
 
-	Route::get('egresados', function (){
-    	return View::make('egresados');
-	});
 	Route::get('egresados', 'EgresadoController@getAll');
     Route::post('egresados/new', 'EgresadoController@addEgresado');
     Route::post('egresados/edit', 'EgresadoController@editEgresado');
     Route::get('egresados/delete/{id}', 'EgresadoController@deleteEgresado');
+
+
+	/*@autor : Ing. Daniel Alajandro Hernandez Gomez
+	 * ruta de empleadpres
+	 * */
+	Route::get('empleadores', 'EmpleadorController@getAll');
+	Route::post('empleadores/new', 'EmpleadorController@addEmpleador');
+	Route::post('empleadores/edit', 'EmpleadorController@editEmpleador');
+	Route::get('empleadores/delete/{id}', 'EmpleadorController@deleteEmpleador');
 
 });  
 
