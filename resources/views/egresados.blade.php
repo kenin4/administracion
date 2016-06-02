@@ -95,16 +95,16 @@
                                 <a href="{{url('/')}}" class="active"><i class="fa fa-university"></i> <span> Inicio</span></a>
                             </li>
                             <li >
-                                <a href="usuarios"><i class="fa fa-user"></i> <span>Usuarios</span> </a>
+                                <a href="{{url('/usuarios')}}"><i class="fa fa-user"></i> <span>Usuarios</span> </a>
                             </li>
                             <li>
-                                <a href="encuestas"><i class="fa fa-book"></i> <span> Encuestas </span> </a>
+                                <a href="{{url('/encuestas')}}"><i class="fa fa-book"></i> <span> Encuestas </span> </a>
                             </li>
                             <li class="active">
-                                <a href="egresados"><i class="fa fa-graduation-cap"></i> <span> Egresados </span> </a>
+                                <a href="{{url('/egresados')}}"><i class="fa fa-graduation-cap"></i> <span> Egresados </span> </a>
                             </li>
                             <li>
-                                <a href="empleadores"><i class="fa fa-briefcase"></i> <span> Empleadores </span> </a>
+                                <a href="{{url('/empleadores')}}"><i class="fa fa-briefcase"></i> <span> Empleadores </span> </a>
                             </li>
 
                             <li>
@@ -166,7 +166,26 @@
                                         <td>{{ $egresado->matricula }}</td>
                                         <td>{{ $egresado->nombre." ".$egresado->apellidos }}</td>
                                          <td hidden>{{ $egresado->apellidos }}</td>
-                                        <td>{{ $egresado->carrera }}</td>
+                                        <td>
+
+                                            @if( $egresado->carrera == 1 )
+                                                Ing. en Computación
+                                            @elseif( $egresado->carrera == 2 )
+                                                Ing. en Electrónica
+                                            @elseif( $egresado->carrera == 3 )
+                                                Ing. en Mecatrónica
+                                            @elseif( $egresado->carrera == 4 )
+                                                Ing. en Diseño
+                                            @elseif( $egresado->carrera == 5 )
+                                                Ing. Industrial
+                                            @elseif( $egresado->carrera == 6 )
+                                                Lic. Ciencias Empresariales
+                                            @else
+                                                No Aplica
+                                            @endif
+
+
+                                        </td>
                                         <td>{{ $egresado->correo }}</td>
                                         <td>{{ $egresado->fecha_graduacion }}</td>
                                         <td>{{ $egresado->municipio_procedencia }}</td>
@@ -256,11 +275,19 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="carrera" class="col-sm-4 control-label">Carrera: </label>
-                                    <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text"  class="form-control" name="carrera"
-                                               id="carrera" placeholder="Carrera...">
+                                <div class="form-group clearfix">
+                                    <label class="col-md-4 control-label " for="carrera">Carrera: </label>
+                                    <div class="col-md-7">
+                                        <select class="form-control select2 " name="carrera">
+                                            <option value="0"></option>
+                                            <option value="0">Todas</option>
+                                            <option value="1">Ing. en Computación</option>
+                                            <option value="2">Ing. en Electrónica</option>
+                                            <option value="3">Ing. en Mecatrónica</option>
+                                            <option value="4">Ing. en Diseño</option>
+                                            <option value="5">Ing. Indistrial</option>
+                                            <option value="6">Lic. Ciencias Empresariales</option>
+                                        </select>
                                     </div>
                                 </div>
                                                 
@@ -275,7 +302,7 @@
                                 <div class="form-group">
                                     <label for="anio_egreso" class="col-sm-4 control-label">Año de Egreso: </label>
                                     <div class="col-sm-7">
-                                        <input parsley-trigger="change" required type="text" class="form-control" name="fecha_graduacion"
+                                        <input parsley-trigger="change" required type="number" data-parsley-type="integer" class="form-control" name="fecha_graduacion"
                                                id="anio_egreso" placeholder="Año de egreso...">
                                     </div>
                                 </div>
@@ -382,11 +409,20 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="carrerae" class="col-sm-4 control-label">Carrera: </label>
-                                <div class="col-sm-7">
-                                    <input  parsley-trigger="change" required type="text"  class="form-control" name="carrera"
-                                           id="carrerae" placeholder="Carrera...">
+
+                            <div class="form-group clearfix">
+                                <label class="col-md-4 control-label " for="carrera">Carrera: </label>
+                                <div class="col-md-7">
+                                    <select class="form-control select2 " id="carrerae" name="carrera">
+                                        <option value="0"></option>
+                                        <option value="0">Todas</option>
+                                        <option value="1">Ing. en Computación</option>
+                                        <option value="2">Ing. en Electrónica</option>
+                                        <option value="3">Ing. en Mecatrónica</option>
+                                        <option value="4">Ing. en Diseño</option>
+                                        <option value="5">Ing. Indistrial</option>
+                                        <option value="6">Lic. Ciencias Empresariales</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -401,7 +437,7 @@
                             <div class="form-group">
                                 <label for="anio_egresoe" class="col-sm-4 control-label">Año de Egreso: </label>
                                 <div class="col-sm-7">
-                                    <input parsley-trigger="change" required type="text" class="form-control" name="fecha_graduacion"
+                                    <input parsley-trigger="change" type="number" required data-parsley-type="integer" class="form-control" name="fecha_graduacion"
                                            id="anio_egresoe" placeholder="Año de egreso...">
                                 </div>
                             </div>

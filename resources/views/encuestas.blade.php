@@ -94,16 +94,16 @@
                                 <a href="{{url('/')}}" class="active"><i class="fa fa-university"></i> <span> Inicio</span></a>
                             </li>
                             <li >
-                                <a href="usuarios"><i class="fa fa-user"></i> <span>Usuarios</span> </a>
+                                <a href="{{url('/usuarios')}}"><i class="fa fa-user"></i> <span>Usuarios</span> </a>
                             </li>
                             <li  class="active">
-                                <a href="encuestas"><i class="fa fa-book"></i> <span> Encuestas </span> </a>
+                                <a href="{{url('/encuestas')}}"><i class="fa fa-book"></i> <span> Encuestas </span> </a>
                             </li>
                             <li>
-                                <a href="egresados"><i class="fa fa-graduation-cap"></i> <span> Egresados </span> </a>
+                                <a href="{{url('/egresados')}}"><i class="fa fa-graduation-cap"></i> <span> Egresados </span> </a>
                             </li>
                             <li>
-                                <a href="empleadores"><i class="fa fa-briefcase"></i> <span> Empleadores </span> </a>
+                                <a href="{{url('/empleadores')}}"><i class="fa fa-briefcase"></i> <span> Empleadores </span> </a>
                             </li>
 
                             <li>
