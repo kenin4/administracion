@@ -45,8 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('egresados/edit', 'EgresadoController@editEgresado');
     Route::get('egresados/delete/{id}', 'EgresadoController@deleteEgresado');
 
-
-
 });  
 
 Route::auth();
