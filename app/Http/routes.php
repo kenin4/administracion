@@ -1,6 +1,7 @@
 <?php
 use App\Egresado;
 use App\Encuesta;
+use App\Empleador;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -19,8 +20,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function (){
     	$egresados = Egresado::all();
 		$encuestas = Encuesta::all();
+		$empleadores = Empleador::all();
 
-		return View::make('prueba')->with('egresados',$egresados)->with('encuestas',$encuestas);
+		return View::make('prueba')->with('egresados',$egresados)->with('encuestas',$encuestas)->with('empleadores',$empleadores);
 	});
 
 	Route::get('usuarios', 'UserController@getAll');
@@ -33,7 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('encuestas/delete/{id}','EncuestaController@deleteEncuesta');
 	Route::post('encuestas/edit','EncuestaController@editEncuesta');
 
-	Route::post('bind','RelacionController@bind');
+	Route::post('bind/egresado','RelacionController@bindEgresado');
+	Route::post('bind/empleador','RelacionController@bindEmpleador');
 
 	Route::get('egresados', 'EgresadoController@getAll');
     Route::post('egresados/new', 'EgresadoController@addEgresado');
