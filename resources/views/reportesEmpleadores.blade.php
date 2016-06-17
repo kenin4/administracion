@@ -107,8 +107,8 @@
                                 <a href="{{url('/empleadores')}}"><i class="fa fa-briefcase"></i> <span> Empleadores </span> </a>
                             </li>
 
-                            <li class="active">
-                                <a type="button"  data-toggle="modal" data-target="#modal-reporte"><i class="fa fa-line-chart"></i> <span> Generador de Reportes </span> </a>
+                            <li>
+                                <a href="{{url('/reportes')}}"><i class="fa fa-line-chart"></i> <span> Reportes </span> </a>
                             </li>
 
                         </ul>
@@ -124,68 +124,565 @@
             <div class="container">
 
                 <!-- Page-Title -->
+
+                <div class="row" style="padding: 30px 0px;">                
+                    <div class="col-md-12">
+                        <div>
+                        <img src="{{ asset("images/logo.png") }}" width="100px" class="col-md-1">
+                            <h4  style="text-align: center;" class="col-md-11">
+                                
+                                @if( $respuesta == 1 )
+                                    Relación de empleadores que han respondido la encuesta
+                                @else
+                                    Relación de empleadores que no han respondido la encuesta
+                                @endif
+
+                                @if( $tipo_reporte == 0 )
+                                    <br> Todos los Giros
+                                @elseif( $tipo_reporte == 1 )
+                                    <br>Tecnología y Comunicación
+                                @elseif( $tipo_reporte == 2 )
+                                    <br>Manufactura
+                                @elseif( $tipo_reporte == 3 )
+                                    <br>Servicios
+                                @elseif( $tipo_reporte == 4 )
+                                    <br>Salud
+                                @elseif( $tipo_reporte == 5 )
+                                    <br>Educación
+                                @elseif( $tipo_reporte == 6 )
+                                    <br>Servicios Públicos
+                                @elseif( $tipo_reporte == 7 )
+                                    <br>Instituciones Financieras
+                                @elseif( $tipo_reporte == 8 )
+                                    <br>Turismo
+                                @else
+                                    <br>Transporte
+                                @endif
+
+
+                            </h4>                           
+                        </div>
+                    </div><!-- end col -->
+                </div>
+                <!-- end row -->
+
+
+
+
+
              
 
+                @if( $tipo_reporte != 0 )
 
-                <div class="row" style="padding: 30px 0px;">
-
-
-
+                <div class="row" style="padding: 10px 0px;">                
                     <div class="col-md-12">
                         <div class="card-box">
+                            <h2 class="header-title m-t-0 m-b-30"> 
+                                @if( $tipo_reporte == 0 )
+                                    Todos los Giros
+                                @elseif( $tipo_reporte == 1 )
+                                    Tecnología y Comunicación
+                                @elseif( $tipo_reporte == 2 )
+                                    Manufactura
+                                @elseif( $tipo_reporte == 3 )
+                                    Servicios
+                                @elseif( $tipo_reporte == 4 )
+                                    Salud
+                                @elseif( $tipo_reporte == 5 )
+                                    Educación
+                                @elseif( $tipo_reporte == 6 )
+                                    Servicios Públicos
+                                @elseif( $tipo_reporte == 7 )
+                                    Instituciones Financieras
+                                @elseif( $tipo_reporte == 8 )
+                                    Turismo
+                                @else
+                                    Transporte
+                                @endif
 
-
+                            </h2>
                             <div >
-                                <table id="datatable" class="table table-striped table-bordered">
+                                <table id="datatable1" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Nombre</th>
-                                        <th>Género</th>
-                                        <th>Correo electrónico</th>
-                                        <th>Encuesta</th>
-                                        <th>Estado</th>
-                                        <th>Próxima Aplicación</th>
-                                    </tr>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
                                     </thead>
                                     <tbody>
-
-
-
+                                    <?php $index = 1 ?>
                                     @foreach( $empleadores as $empleador )
 
-
                                         <tr>
-
-                                            <td>{{ $empleador->nombre_empleador }}</td>
-                                            <td>{{ $empleador->genero_empleador }}</td>
-                                            <td>{{ $empleador->correo_empleador }}</td>
-                                            <td>{{ $empleador->codigo_encuesta }}</td>
-                                            <td>
-                                                    @if( $empleador->estado_encuesta > 0 && $empleador->estado_encuesta < 15  )
-                                                        <span class="label label-warning">Próximo a vencer</span>
-                                                    @elseif( $empleador->estado_encuesta < 0 )
-                                                        <span class="label label-danger">Vencido</span>
-                                                    @else
-                                                        <span class="label label-success">Actualizado</span>
-                                                    @endif
-                                            </td>
-                                            <td>{{ $empleador->proxima_aplicacion }}</td>
-
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
                                         </tr>
 
                                     @endforeach
-                                        
-
-                                        
-
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div><!-- end col -->
-
                 </div>
                 <!-- end row -->
+
+                @else
+
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Tecnología y Comunicación </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 1 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Manufactura </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 2 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Servicios </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 3 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Salud </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 4 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Educación </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 5 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Servicios Públicos </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 6 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Instituciones Financieras </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 7 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Turismo </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 8 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                    <div class="row" style="padding: 30px 0px;">                
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h2 class="header-title m-t-0 m-b-30">  Transporte </h2>
+                                <div >
+
+
+                                    <table id="datatable2" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Puesto</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+
+                                        @if( $respuesta == 1 )
+                                            <th>Fecha de aplicación</th>
+                                        @endif                                                                              
+                                    </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                    <?php $index = 1 ?>
+                                    @foreach( $empleadores as $empleador )
+                                        
+                                        @if( $empleador->giro == 9 )
+                                        <tr>
+                                            <td>{{ $index++ }}</td>                                            
+                                            <td>{{ $empleador->nombre }}</td>
+                                            <td>{{ $empleador->puesto }}</td>
+                                            <td>{{ $empleador->correo }}</td>
+                                            <td>{{ $empleador->telefono }}</td>
+                                             @if( $respuesta == 1 )
+                                                <td>{{ $empleador->fecha }}</td>
+                                            @endif                                                                                        
+                                        </tr>
+                                        @endif
+
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+
+
+                
+
+                @endif
 
 
 
@@ -213,178 +710,6 @@
 
 
         </div>
-
-
-        <div id="modal-reporte" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-
-
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title"><i class="fa fa-pie-chart" aria-hidden="true"></i> Generar Reporte</h4>
-                    </div>
-                    <div class="modal-body">
-
-
-
-
-                        <div id="basicwizard" class=" pull-in">
-                            <ul>
-                                <li><a href="#tab5" data-toggle="tab"><i class="fa fa-graduation-cap"></i> Egresados</a></li>
-                                <li><a href="#tab6" data-toggle="tab"><i class="fa fa-briefcase"></i> Empleadores</a></li>
-                            </ul>
-                            <div class="tab-content b-0 m-b-0">
-                                <div class="tab-pane m-t-10 fade" id="tab5">
-
-                                    <form  method="post" action="{{url('/reporte/egresados')}}" class="form-horizontal">
-
-                                        {{ csrf_field() }}
-
-                                        <div class="row">
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="carrera">Carrera: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="carreraa" name="carrera">
-                                                        <option value="0"></option>
-                                                        <option value="0">Todas</option>
-                                                        <option value="1">Ing. en Computación</option>
-                                                        <option value="2">Ing. en Electrónica</option>
-                                                        <option value="3">Ing. en Mecatrónica</option>
-                                                        <option value="4">Ing. en Diseño</option>
-                                                        <option value="5">Ing. Indistrial</option>
-                                                        <option value="6">Lic. Ciencias Empresariales</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="generoe" name="genero">
-                                                        <option value="-1"></option>
-                                                        <option value="-1">Ambos</option>
-                                                        <option value="1">Hombre</option>
-                                                        <option value="0">Mujer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
-                                                <div class="col-md-9">
-                                                    <input id="anio_aplicacion" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="anio_egreso"> Año de Egreso:</label>
-                                                <div class="col-md-9">
-                                                    <input id="anio_egreso" name="anio_egreso" type="number" data-parsley-type="integer" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta:  </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="estado" name="estado">
-                                                        <option value="0"></option>
-                                                        <option value="0">Todos</option>
-                                                        <option value="1">Actualizado</option>
-                                                        <option value="2">Vencido</option>
-                                                        <option value="3">Próximo a Vencer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="form-group pull-right" >
-                                            <div>
-                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
-                                                    Generar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
-
-
-                                <div class="tab-pane m-t-10 fade" id="tab6">
-                                    <form  method="post" action="{{url('/reporte/empleadores')}}" class="form-horizontal">
-
-                                        {{ csrf_field() }}
-
-                                        <div class="row">
-
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="generoem" name="genero">
-                                                        <option value="-1"></option>
-                                                        <option value="-1">Ambos</option>
-                                                        <option value="1">Hombre</option>
-                                                        <option value="0">Mujer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="esatdo"> Estado:</label>
-                                                <div class="col-md-9">
-                                                    <input id="esatdo" name="estado" type="text" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
-                                                <div class="col-md-9">
-                                                    <input id="anio_aplicacione" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="estadoee" name="status">
-                                                        <option value="0"></option>
-                                                        <option value="0">Todos</option>
-                                                        <option value="1">Actualizado</option>
-                                                        <option value="2">Vencido</option>
-                                                        <option value="3">Próximo a Vencer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-                                        <div class="form-group pull-right" >
-                                            <div>
-                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
-                                                    Generar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div><!-- /.modal -->
 
 
 
@@ -441,7 +766,7 @@
          <script>
             jQuery(document).ready(function() {
                 $(".select2").select2();
-                $('#datatable').dataTable();
+                
                 $('#basicwizard').bootstrapWizard({'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
             });
 

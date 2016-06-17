@@ -108,7 +108,7 @@
                             </li>
 
                             <li>
-                                <a type="button"  data-toggle="modal" data-target="#modal-reporte"><i class="fa fa-line-chart"></i> <span> Generador de Reportes </span> </a>
+                                <a href="{{url('/reportes')}}"><i class="fa fa-line-chart"></i> <span> Reportes </span> </a>
                             </li>
 
                         </ul>
@@ -147,6 +147,9 @@
                                         <th>Género</th>
                                         <th hidden>Nombre</th>
                                         <th hidden>Apellidos</th>
+                                        <th>Puesto</th>
+                                        <th hidden>Puesto</th>
+                                        <th hidden>Empresa</th>
                                         <th>Correo electrónico</th>
                                         <th>Teléfono</th>
                                         <th hidden>calle</th>
@@ -158,7 +161,6 @@
                                         <th hidden>estado</th>
                                         <th hidden>cp</th>
                                         <th style="width: 250px">Dirección</th>
-                                        <th>Comentarios</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
@@ -175,6 +177,9 @@
                                          <td>{{ $empleador->genero == 1 ? "Hombre" : "Mujer" }}</td>
                                          <td hidden>{{ $empleador->nombre }}</td>
                                          <td hidden>{{ $empleador->apellidos }}</td>
+                                         <td>{{ $empleador->puesto." en ".$empleador->empresa }}</td>
+                                         <td hidden>{{ $empleador->puesto }}</td>
+                                         <td hidden>{{ $empleador->empresa }}</td>
                                          <td>{{ $empleador->correo }}</td>
                                          <td>{{ $empleador->telefono }}</td>
                                          <td hidden>{{ $empleador->calle }}</td>
@@ -194,8 +199,7 @@
                                                  (empty( $empleador->estado )? "":" ".$empleador->estado.",").
                                                  (empty( $empleador->cp )? "":" Cp: ".$empleador->cp)
                                              }}
-                                         </td>
-                                         <td>{{ $empleador->notas }}</td>
+                                         </td>                                         
                                          <td>
                                             <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="loadEmpleador( {{ $empleador->id }}) " > <i class="fa fa-pencil"></i> </button>
                                             <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEmpleador({{ $empleador->id }})"> <i class="fa fa-trash"></i> </button>
@@ -242,181 +246,6 @@
 
 
         </div>
-
-
-        <div id="modal-reporte" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-
-
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title"><i class="fa fa-pie-chart" aria-hidden="true"></i> Generar Reporte</h4>
-                    </div>
-                    <div class="modal-body">
-
-
-
-
-                        <div id="basicwizard" class=" pull-in">
-                            <ul>
-                                <li><a href="#tab5" data-toggle="tab"><i class="fa fa-graduation-cap"></i> Egresados</a></li>
-                                <li><a href="#tab6" data-toggle="tab"><i class="fa fa-briefcase"></i> Empleadores</a></li>
-                            </ul>
-                            <div class="tab-content b-0 m-b-0">
-                                <div class="tab-pane m-t-10 fade" id="tab5">
-
-                                    <form  method="post" action="reporte/egresados" class="form-horizontal">
-
-                                        {{ csrf_field() }}
-
-                                        <div class="row">
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="carrera">Carrera: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="carreraa" name="carrera">
-                                                        <option value="0"></option>
-                                                        <option value="0">Todas</option>
-                                                        <option value="1">Ing. en Computación</option>
-                                                        <option value="2">Ing. en Electrónica</option>
-                                                        <option value="3">Ing. en Mecatrónica</option>
-                                                        <option value="4">Ing. en Diseño</option>
-                                                        <option value="5">Ing. Indistrial</option>
-                                                        <option value="6">Lic. Ciencias Empresariales</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="generoe" name="genero">
-                                                        <option value="-1"></option>
-                                                        <option value="-1">Ambos</option>
-                                                        <option value="1">Hombre</option>
-                                                        <option value="0">Mujer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
-                                                <div class="col-md-9">
-                                                    <input id="anio_aplicacion" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="anio_egreso"> Año de Egreso:</label>
-                                                <div class="col-md-9">
-                                                    <input id="anio_egreso" name="anio_egreso" type="number" data-parsley-type="integer" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta:  </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="estado" name="estado">
-                                                        <option value="0"></option>
-                                                        <option value="0">Todos</option>
-                                                        <option value="1">Actualizado</option>
-                                                        <option value="2">Vencido</option>
-                                                        <option value="3">Próximo a Vencer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="form-group pull-right" >
-                                            <div>
-                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
-                                                    Generar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
-
-
-                                <div class="tab-pane m-t-10 fade" id="tab6">
-                                    <form  method="post" action="reporte/empleadores" class="form-horizontal">
-
-                                        {{ csrf_field() }}
-
-                                        <div class="row">
-
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="generoe">Género: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="generoem" name="genero">
-                                                        <option value="-1"></option>
-                                                        <option value="-1">Ambos</option>
-                                                        <option value="1">Hombre</option>
-                                                        <option value="0">Mujer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="esatdo"> Estado:</label>
-                                                <div class="col-md-9">
-                                                    <input id="esatdo" name="estado" type="text" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="anio_aplicacion"> Año de Aplicación:</label>
-                                                <div class="col-md-9">
-                                                    <input id="anio_aplicacione" parsley-trigger="change" type="number" data-parsley-type="integer" name="anio_aplicacion" class=" form-control">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="estado">Estado de la Encuesta: </label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 " id="estadoee" name="status">
-                                                        <option value="0"></option>
-                                                        <option value="0">Todos</option>
-                                                        <option value="1">Actualizado</option>
-                                                        <option value="2">Vencido</option>
-                                                        <option value="3">Próximo a Vencer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-                                        <div class="form-group pull-right" >
-                                            <div>
-                                                <button  type="submit" class="btn btn-primary waves-effect waves-light">
-                                                    Generar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div><!-- /.modal -->
-
-
-
 
 
 
@@ -468,6 +297,42 @@
                                             </div>
 
                                             <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="empresa">Empresa *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="empresa" name="empresa" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="puesto">Puesto *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="puesto" name="puesto" type="text">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="giro">Giro *</label>
+                                                <div class="col-md-9">
+
+                                                    <select class="form-control select2 required" id="giro" name="giro">
+                                                        <option value="1">Tecnología y Comunicación</option>
+                                                        <option value="2">Manufactura</option>
+                                                        <option value="3">Servicios</option>
+                                                        <option value="4">Salud</option>
+                                                        <option value="5">Educación</option>
+                                                        <option value="6">Servicios Públicos</option>
+                                                        <option value="7">Instituciones Financieras</option>
+                                                        <option value="8">Turismo</option>
+                                                        <option value="9">Transporte</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="form-group clearfix">
                                                 <label class="col-md-3 control-label " for="genero">Género *</label>
                                                 <div class="col-md-9">
 
@@ -493,12 +358,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="notas">Comentarios:</label>
-                                                <div class="col-md-9">
-                                                    <textarea class="form-control" maxlength="225" rows="2" placeholder="Agrega algún comentario..." name="notas"></textarea>
-                                                </div>
-                                            </div>
+                                           
 
 
                                         </div>
@@ -647,6 +507,40 @@
                                             </div>
 
                                             <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="empresa">Empresa *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="empresae" name="empresa" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="puesto">Puesto *</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control required" id="puestoe" name="puesto" type="text">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-md-3 control-label " for="giro">Giro *</label>
+                                                <div class="col-md-9">
+
+                                                    <select class="form-control select2 required" id="giroe" name="giro">
+                                                        <option value="1">Tecnología y Comunicación</option>
+                                                        <option value="2">Manufactura</option>
+                                                        <option value="3">Servicios</option>
+                                                        <option value="4">Salud</option>
+                                                        <option value="5">Educación</option>
+                                                        <option value="6">Servicios Públicos</option>
+                                                        <option value="7">Instituciones Financieras</option>
+                                                        <option value="8">Turismo</option>
+                                                        <option value="9">Transporte</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
                                                 <label class="col-md-3 control-label " for="generoe">Género *</label>
                                                 <div class="col-md-9">
 
@@ -670,15 +564,7 @@
                                                 <div class="col-md-9">
                                                     <input class="form-control " id="telefonoe" name="telefono" type="text">
                                                 </div>
-                                            </div>
-
-                                            <div class="form-group clearfix">
-                                                <label class="col-md-3 control-label " for="notas">Comentarios:</label>
-                                                <div class="col-md-9">
-                                                    <textarea class="form-control" maxlength="225" rows="2" placeholder="Agrega algún comentario..." name="notas" id="notase"></textarea>
-                                                </div>
-                                            </div>
-
+                                            </div>                                            
 
                                         </div>
                                     </div>
@@ -947,22 +833,26 @@
 
             function loadEmpleador( id ){
 
+
+                
+
                 var record = document.getElementById("registro"+id);
                 document.getElementById('id').value = id;
                 document.getElementById('nombree').value=record.childNodes[5].innerHTML;
                 document.getElementById('apellidose').value=record.childNodes[7].innerHTML;
+                document.getElementById('empresae').value=record.childNodes[13].innerHTML;
+                document.getElementById('puestoe').value=record.childNodes[11].innerHTML;
                 document.getElementById('generoe').value = record.childNodes[3].innerHTML == "Hombre" ? 1 : 0;
-                document.getElementById('emaile').value=record.childNodes[9].innerHTML;
-                document.getElementById('telefonoe').value=record.childNodes[11].innerHTML;
-                document.getElementById('callee').value=record.childNodes[13].innerHTML;
-                document.getElementById('numero_inte').value=record.childNodes[15].innerHTML;
-                document.getElementById('numero_exte').value=record.childNodes[17].innerHTML;
-                document.getElementById('coloniae').value=record.childNodes[19].innerHTML;
-                document.getElementById('delegacione').value=record.childNodes[21].innerHTML;
-                document.getElementById('ciudade').value=record.childNodes[23].innerHTML;
-                document.getElementById('estadoe').value=record.childNodes[25].innerHTML;
-                document.getElementById('cpe').value=record.childNodes[27].innerHTML;
-                document.getElementById('notase').value=record.childNodes[31].innerHTML;
+                document.getElementById('emaile').value=record.childNodes[15].innerHTML;
+                document.getElementById('telefonoe').value=record.childNodes[17].innerHTML;
+                document.getElementById('callee').value=record.childNodes[19].innerHTML;
+                document.getElementById('numero_inte').value=record.childNodes[21].innerHTML;
+                document.getElementById('numero_exte').value=record.childNodes[23].innerHTML;
+                document.getElementById('coloniae').value=record.childNodes[25].innerHTML;
+                document.getElementById('delegacione').value=record.childNodes[27].innerHTML;
+                document.getElementById('ciudade').value=record.childNodes[29].innerHTML;
+                document.getElementById('estadoe').value=record.childNodes[31].innerHTML;
+                document.getElementById('cpe').value=record.childNodes[33].innerHTML;
 
 
             }

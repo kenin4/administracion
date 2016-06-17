@@ -17,98 +17,102 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Empleador;
 use App\Egresado;
+use App\Encuesta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use View;
 
 class ReporteController extends Controller
 {
+
+    public function index( ){
+
+        $encuestasEgresados = Encuesta::where('tipo' , 1 )->get();
+        $encuestasEmpleadores = Encuesta::where('tipo' , 0 )->get();
+        return View::make('reportes')->with('encuestasEgresados', $encuestasEgresados )->with('encuestasEmpleadores', $encuestasEmpleadores );
+    }
+
     /*
      * Obtiene todos los registros activos de la tabla de empleadores
      *
      * */
 
-    public function getReporteEgresado( Request $data){
+    public function getReporteEgresado( Request $data ){
 
-        $query = 'SELECT 	v.matricula as matricula,
-			CONCAT(v.nombre, " " , v.apellidos ) as nombre,
-			CASE ( v.genero )
-				WHEN 1 THEN "Hombre"
-				WHEN 0 THEN "Mujer"
-			END as genero,
-			v.correo as correo,
-			u.codigo as codigo_encuesta,
-			DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) as estado_encuesta,
-			ee.fecha_proxima_aplicacion as proxima_aplicacion
+        $query = 'SELECT                        
+                        p.matricula,
+                        p.correo,
+                        CONCAT( p.nombre , " " , p.apellidos) as nombre,
+                        p.carrera,
+                        CASE ( p.genero )
+                            WHEN 1 THEN "Hombre"
+                            WHEN 0 THEN "Mujer"
+                        END as genero,
+                        p.fecha_aplicacion as fecha 
 
-            FROM  	encuestas u, egresados v, egresado_encuesta ee
-            WHERE 	ee.egresado_id = v.id AND
-                    ee.encuesta_id 	= u.id ';
+                         FROM ( 
+                            SELECT * FROM egresados e LEFT JOIN egresado_encuesta ee ON e.id = ee.egresado_id 
+                        ) p ';
 
-
-
+        if( isset( $data->estado_encuesta ) && $data->estado_encuesta == 1 ) //la encuesta seleccionada fue respondida
+            $query = $query.'WHERE encuesta_id = '.$data->id_encuesta.' AND estado != 1 ';
+        else if ( isset( $data->estado_encuesta) && $data->estado_encuesta == 0 ) //la encuesta seleccionada No fue respondida
+            $query = $query.'WHERE ( ISNULL( encuesta_id ) OR encuesta_id != '.$data->id_encuesta.' OR estado = 1 ) ';
+        
         $data->carrera == 0 ? $query = $query."" : $query = $query." AND carrera = ".$data->carrera." ";
-        $data->genero == -1 ? $query = $query."" : $query = $query." AND v.genero = ".$data->genero." ";
-        empty( $data->anio_aplicacion ) ? $query = $query."" : $query = $query." AND YEAR(ee.fecha_aplicacion) = ".$data->anio_aplicacion." ";
-        empty( $data->anio_egreso ) ? $query = $query."" : $query = $query."AND v.fecha_graduacion = ".$data->anio_egreso." ";
+        $data->genero == -1 ? $query = $query."" : $query = $query." AND genero = ".$data->genero." ";
+        empty( $data->generacion ) ? $query = $query."" : $query = $query." AND fecha_graduacion = ".$data->generacion." ";
+                
+        $query = $query." ORDER BY nombre ASC";
 
-
-        if( $data->status == 1 )
-            $query = $query." AND DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) > 0 ";
-        if( $data->status == 2 )
-            $query = $query." AND DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) < 0 ";
-        if( $data->status == 3 )
-            $query = $query." AND DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) > 0  AND  DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) < 15";
-
-
-        $query = $query." ORDER BY  estado_encuesta ASC";
+        empty( $data->generacion ) ? $generacion = -1 : $generacion = $data->generacion;
 
 
         $egresados = DB::select( DB::raw( $query ) );
-
-        return View::make('reportesEgresados')->with('egresados', $egresados );
+        return View::make('reportesEgresados')->with('egresados', $egresados )->with('tipo_reporte', $data->carrera )->with('respuesta', $data->estado_encuesta )->with('generacion', $generacion );
 
     }
+
+
+
+
+    
 
     public function getReporteEmpleador( Request $data ){
 
 
-
-
-
-
-        $query = ' 	SELECT 	CONCAT(v.nombre, " " , v.apellidos ) as nombre_empleador,
-                    CASE ( v.genero )
+        $query = 'SELECT 
+                    CONCAT( p.nombre , " " , p.apellidos ) as nombre ,
+                    p.giro,
+                    CONCAT( p.puesto , " en " , p.empresa ) as puesto,
+                    CASE ( p.genero )
                         WHEN 1 THEN "Hombre"
                         WHEN 0 THEN "Mujer"
-                    END as genero_empleador,
-                    v.correo as correo_empleador,
-                    u.codigo as codigo_encuesta,
-                    DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) as estado_encuesta,
-                    ee.fecha_proxima_aplicacion as proxima_aplicacion
+                    END as genero,
+                    p.correo,
+                    p.telefono,
+                    p.fecha_aplicacion as fecha
 
-                    FROM  encuestas u, empleadores v, empleador_encuesta ee
-                    WHERE 	ee.id_empleador = v.id AND
-                            ee.id_encuesta 	= u.id ';
+                FROM (
 
-
-        $data->genero == -1 ? $query = $query."" : $query = $query." AND v.genero = ".$data->genero." ";
-        empty( $data->estado ) ? $query = $query."" : $query = $query."AND v.estado =  upper('".$data->estado."') ";
-        empty( $data->anio_aplicacion ) ? $query = $query."" : $query = $query."AND YEAR(ee.fecha_aplicacion) = ".$data->anio_aplicacion." ";
-
-        if( $data->status == 1 )
-            $query = $query." AND DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) > 0 ";
-        if( $data->status == 2 )
-            $query = $query." AND DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) < 0 ";
-        if( $data->status == 3 )
-            $query = $query." AND DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) > 0  AND  DATEDIFF(  ee.fecha_proxima_aplicacion, CURDATE() ) < 15";
+                    SELECT * FROM empleadores e LEFT JOIN empleador_encuesta ee ON e.id = ee.id_empleador 
+                    
+                ) p ';
 
 
-        $query = $query." ORDER BY  estado_encuesta ASC";
+        if( $data->estado_encuesta == 1 ) //la encuesta seleccionada fue respondida
+            $query = $query.'WHERE id_encuesta = '.$data->encuesta_id.' AND estatus != 1';
+        else //la encuesta seleccionada No fue respondida
+            $query = $query.'WHERE ( ISNULL( id_encuesta ) OR id_encuesta != '.$data->encuesta_id.' OR estatus = 1 ) ';
+
+
+        $data->giro == 0 ? $query = $query."" : $query = $query." AND giro = ".$data->giro." ";
+        $query = $query." ORDER BY nombre ASC";
+
 
         $empleadores = DB::select( DB::raw( $query ) );
 
-        return View::make('reportesEmpleadores')->with('empleadores', $empleadores );
+        return View::make('reportesEmpleadores')->with('empleadores', $empleadores )->with('respuesta', $data->estado_encuesta )->with('tipo_reporte', $data->giro );
     }
 
 }

@@ -16,26 +16,27 @@ class EncuestaController extends Controller
     }
 
     public function addEncuesta(Request $data)
-    {
-        //var_dump($data->all());
+    {        
         $encuesta = new Encuesta;
         $encuesta->codigo = $data->codigo;
         $encuesta->nombre = $data->nombre;
         $encuesta->descripcion = $data->descripcion;
         $encuesta->link = $data->link;
+        $encuesta->tipo = $data->tipo;
         $encuesta->save();
 
         return redirect()->action('EncuestaController@showAll');
     }
 
+
     public function editEncuesta(Request $data)
-    {
-        //var_dump($data->all());
+    {        
         $encuesta = Encuesta::find($data->id);
         $encuesta->codigo = $data->codigo;
         $encuesta->nombre = $data->nombre;
         $encuesta->descripcion = $data->descripcion;
         $encuesta->link = $data->link;
+        $encuesta->tipo = $data->tipo;
         $encuesta->save();
 
         return redirect()->action('EncuestaController@showAll');

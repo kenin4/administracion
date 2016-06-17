@@ -111,7 +111,7 @@
                             </li>
 
                             <li>
-                                <a type="button"  data-toggle="modal" data-target="#modal-reporte"><i class="fa fa-line-chart"></i> <span> Generador de Reportes </span> </a>
+                                <a href="{{url('/reportes')}}"><i class="fa fa-line-chart"></i> <span> Reportes </span> </a>
                             </li>
                         </ul>
                         <!-- End navigation menu  -->
