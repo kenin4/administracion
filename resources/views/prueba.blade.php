@@ -265,69 +265,10 @@
                                 <div class="modal-dialog">
 
                                 
-<<<<<<< HEAD
-                                <ul>
-                                    <li><a href="#tab21" data-toggle="tab"><i class="fa fa-graduation-cap"></i> Egresados</a></li>
-                                    <li><a href="#tab22" data-toggle="tab"><i class="fa fa-briefcase"></i> Empleadores</a></li>
-                                </ul>
-                                <div class="tab-content b-0 m-b-0">
-                                    <div class="tab-pane m-t-10 fade" id="tab21">
-                                        <form action="bind/egresado" method="POST">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="field-1" class="control-label">Egresado:</label>
-                                                    <select class="form-control select2" name="egresado_id" required>
-                                                        <option value="">Seleccionar Egresado</option>
-                                                        @foreach($egresados as $egresado)
-                                                        <option value="{{$egresado->id}}">{{$egresado->nombre ." ". $egresado->apellidos ." :: ".$egresado->matricula}}  </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            {{ csrf_field() }}
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="field-1" class="control-label">Encuesta:</label>
-                                                    <select class="form-control select2" name="encuesta_id" required>
-                                                        <option value="">Selecciona la Encuesta</option>
-                                                        @foreach($encuestas as $encuesta)
-                                                        <option value="{{$encuesta->id}}">{{$encuesta->codigo}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4">Fecha de Aplicación</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="fecha_aplicacion" placeholder="yyyy/mm/dd" id="datepicker-autoclose" required>
-                                                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
-                                                        </div><!-- input-group -->
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-sm-4">Próxima Aplicación</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" name="fecha_proxima_aplicacion" id="datepicker-autoclose2" required>
-                                                            <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
-                                                            </div><!-- input-group -->
-                                                        </div>
-                                                </div>
-                                                
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
-                                                    </div>
-                                                </form>
-=======
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 <h4 class="modal-title">Cambiar Estado</h4>
->>>>>>> 3c1c3d2746e7e370f41c997f379bbee8e3b9ffc4
                                             </div>
                                             <div class="modal-body">
 
@@ -368,27 +309,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-<<<<<<< HEAD
-                                                
-                                            </div>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                        </div>
-                                        
-                                        
-                                    </div>
-                                </div>
-            </div><!-- /.modal -->
-                                
-=======
->>>>>>> 3c1c3d2746e7e370f41c997f379bbee8e3b9ffc4
 
 
                                                 <div class="form-group pull-right">
