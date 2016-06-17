@@ -46,6 +46,9 @@ class EmpleadorController extends Controller
         $empleador->nombre                   = $data->nombre;
         $empleador->apellidos                = $data->apellidos;
         $empleador->genero                   = $data->genero;
+        $empleador->empresa                  = $data->empresa;
+        $empleador->puesto                   = $data->puesto;
+        $empleador->giro                     = $data->giro;
         $empleador->correo                   = $data->email;
         $empleador->telefono                 = $data->telefono;
         $empleador->calle                    = $data->calle;
@@ -56,7 +59,7 @@ class EmpleadorController extends Controller
         $empleador->ciudad                   = $data->ciudad;
         $empleador->estado                   = strtoupper($data->estado);
         $empleador->cp                       = $data->cp;
-        $empleador->notas                    = $data->notas;
+
 
 
         $empleador->save();
@@ -79,6 +82,9 @@ class EmpleadorController extends Controller
         $empleador->nombre                   = $data->nombre;
         $empleador->apellidos                = $data->apellidos;
         $empleador->genero                   = $data->genero;
+        $empleador->empresa                  = $data->empresa;
+        $empleador->puesto                   = $data->puesto;
+        $empleador->giro                     = $data->giro;
         $empleador->correo                   = $data->email;
         $empleador->telefono                 = $data->telefono;
         $empleador->calle                    = $data->calle;
@@ -89,7 +95,7 @@ class EmpleadorController extends Controller
         $empleador->ciudad                   = $data->ciudad;
         $empleador->estado                   = strtoupper($data->estado);
         $empleador->cp                       = $data->cp;
-        $empleador->notas                    = $data->notas;
+
 
 
         $empleador->save();
