@@ -115,4 +115,24 @@ class ReporteController extends Controller
         return View::make('reportesEmpleadores')->with('empleadores', $empleadores )->with('respuesta', $data->estado_encuesta )->with('tipo_reporte', $data->giro );
     }
 
+
+    public function geditegresadorelation( Request $data ){
+
+        $egresados = Egresado::all();
+        $encuestas = Encuesta::all();
+        $empleadores = Empleador::all();
+
+        return View::make('prueba')->with('egresados',$egresados)->with('encuestas',$encuestas)->with('empleadores',$empleadores);
+
+    }
+
+    public function empleadorrelation( Request $data  ){
+
+        $egresados = Egresado::all();
+        $encuestas = Encuesta::all();
+        $empleadores = Empleador::all();
+
+        return View::make('prueba')->with('egresados',$egresados)->with('encuestas',$encuestas)->with('empleadores',$empleadores);
+    }
+
 }

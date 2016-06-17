@@ -59,6 +59,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('reportes', 'ReporteController@index');
 	Route::post('reportes/egresados', 'ReporteController@getReporteEgresado');
 	Route::post('reportes/empleadores', 'ReporteController@getReporteEmpleador');
+	Route::post('reportes/editegresadorelation', 'ReporteController@geditegresadorelation');
+	Route::post('reportes/editempleadorrelation', 'ReporteController@empleadorrelation');
 
 
 
