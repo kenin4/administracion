@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Egresado;
+use App\Encuesta;
 use Illuminate\Support\Facades\Auth;
 use View;
 
@@ -29,7 +30,8 @@ class EgresadoController extends Controller
     public function getAll()
     {
         $egresados = Egresado::all();
-        return View::make('egresados')->with('egresados', $egresados );
+        $encuestas = Encuesta::all();
+        return View::make('egresados')->with('egresados', $egresados )->with('encuestas',$encuestas);
     }
 
     /*

@@ -327,15 +327,7 @@
                                                             </div><!-- input-group -->
                                                         </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-sm-4">Próxima Aplicación</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" name="fecha_proxima_aplicacion" id="datepicker-autoclose2" required>
-                                                            <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-calendar"></i></span>
-                                                            </div><!-- input-group -->
-                                                        </div>
-                                                </div>
+                                                
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
                                                         <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
@@ -410,7 +402,7 @@
                                         
                                     </div>
                                 </div>
-                                </div><!-- /.modal -->
+            </div><!-- /.modal -->
                                 
 
 
