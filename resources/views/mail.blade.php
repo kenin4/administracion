@@ -5,8 +5,8 @@
     <title>Nueva encuesta</title>
 </head>
 <body>
-    Hola {{$egresado->nombre}}
+    Hola Kevin
     <br>
-    Este correo es para invitarte a contestar la siguiente encuesta <a href="{{$encuesta->link}}">{{$encuesta->nombre}}</a>
+    Este correo es para invitarte a contestar la siguiente encuesta 
 </body>
 </html>

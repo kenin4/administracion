@@ -15,38 +15,70 @@ class RelacionController extends Controller
 {
     public function bindEgresado(Request $data)
     {
-        $busqueda = Egresado_Encuesta::where('egresado_id' , '=', $data->egresado_id)->where('encuesta_id', '=', $data->encuesta_id)->get();
-        if (count($busqueda)!=0) {
-            $egresado = Egresado::find($data->egresado_id);
-            return \View::make('messages')->with('type','alert-info')->with('title','Atención!')->with('mensaje','Este egresado ya tiene asociada esta encuesta. Intenta actualizar la fecha de aplicacion de la encuesta para enviarla nuevamente');
-            //var_dump($egresado);
-            //echo "|" . $egresado->correo. "|";
-            $encuesta = Encuesta::find($data->encuesta_id);
-            \Mail::send('email', ['egresado' => $egresado, 'encuesta' => $encuesta], function($message) use ($egresado, $encuesta)
+        $i=0;
+        foreach ($data->egresados as $egresado) {
+            # code...
+
+            $busqueda = Egresado_Encuesta::where('egresado_id' , '=', $data->egresado_id)->where('encuesta_id', '=', $data->encuesta_id)->get();
+            if (count($busqueda)!=0) {
+                    foreach ($busqueda as $existente) {
+                        $existente->status=1;
+                        $existente->save();
+                    }
+                }
+            else
             {
-                $message->to($egresado->correo, $egresado->nombre . " " . $egresado->apellidos)->subject('Invitación a Encuesta');
-            });
+                $relacion = new Egresado_Encuesta;
             
-        }
-        $relacion = new Egresado_Encuesta;
+                $relacion->egresado_id = $data->egresados[$i];
+                $relacion->encuesta_id = $data->encuesta_id;
+                $hoy=date('Y-m-d');
+                $relacion->fecha_aplicacion = $hoy;
+                $nueva_fecha = date('Y-m-d',strtotime('+12 months', strtotime($hoy)));
+                $relacion->fecha_proxima_aplicacion =$nueva_fecha;
+
+                $relacion->save(); 
+            }
+                
+                /*$egresado = Egresado::find($data->egresado_id);
+                return \View::make('messages')->with('type','alert-info')->with('title','Atención!')->with('mensaje','Este egresado ya tiene asociada esta encuesta. Intenta actualizar la fecha de aplicacion de la encuesta para enviarla nuevamente');
+                //var_dump($egresado);
+                //echo "|" . $egresado->correo. "|";
+                $encuesta = Encuesta::find($data->encuesta_id);
+                \Mail::send('email', ['egresado' => $egresado, 'encuesta' => $encuesta], function($message) use ($egresado, $encuesta)
+                {
+                    $message->to($egresado->correo, $egresado->nombre . " " . $egresado->apellidos)->subject('Invitación a Encuesta');
+                });*/
+                $i++;
+                
+            }
+            
+           
+           
+
         
-        $relacion->egresado_id = $data->egresado_id;
-        $relacion->encuesta_id = $data->encuesta_id;
+        
 
-        $relacion->fecha_aplicacion = $data->fecha_aplicacion;
-        $relacion->fecha_proxima_aplicacion = $data->fecha_proxima_aplicacion;
-
-        $relacion->save();
+        
         
         $egresado = Egresado::find($data->egresado_id);
         //var_dump($egresado);
         //echo "|" . $egresado->correo. "|";
         $encuesta = Encuesta::find($data->encuesta_id);
+
+        \Mail::send('email', [], function($message) use ($data)
+        {
+            $message->to($data->correos, "UTM")->subject('Invitación a Encuesta');
+        });
+        return \View::make('messages')->with('type','alert-success')->with('title','Éxito!')->with('mensaje','Se ha enviado un correo con la dirección de la encuesta');
+
+        /*
         \Mail::send('email', ['egresado' => $egresado, 'encuesta' => $encuesta], function($message) use ($egresado, $encuesta)
         {
             $message->to($egresado->correo, $egresado->nombre . " " . $egresado->apellidos)->subject('Invitación a Encuesta');
         });
         return \View::make('messages')->with('type','alert-success')->with('title','Éxito!')->with('mensaje','Se ha enviado un correo con la dirección de la encuesta');
+        */
     }
 
     public function bindEmpleador(Request $data)
@@ -84,6 +116,25 @@ class RelacionController extends Controller
             $message->to($empleador->correo, $empleador->nombre . " " . $empleador->apellidos)->subject('Invitación a Encuesta');
         });
         return \View::make('messages')->with('type','alert-success')->with('title','Éxito!')->with('mensaje','Se ha enviado un correo con la dirección de la encuesta');
+    }
+
+    public function email(Request $data)
+    {
+        var_dump($data->egresados);
+        echo "<br>";
+        var_dump($data->correos);
+        echo "<br>";
+        var_dump($data->vigencia);
+        echo "<br>";
+
+        /*
+        $hola=[ "2011020360" , "2011020021" ,"32322122" ,"32323332" ,"232323" ];
+        var_dump($hola);
+        \Mail::send('email', [], function($message) use ($data)
+        {
+            $message->to($data->egresados, "kevin")->subject('Invitación a Encuesta');
+        });
+        return \View::make('messages')->with('type','alert-success')->with('title','Éxito!')->with('mensaje','Se ha enviado un correo con la dirección de la encuesta');*/
     }
 
 }

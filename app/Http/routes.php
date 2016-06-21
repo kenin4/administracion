@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('egresados/delete/{id}', 'EgresadoController@deleteEgresado');
 
 
+
+
 	/*@autor : Ing. Daniel Alajandro Hernandez Gomez
 	 * ruta de empleadores
 	 * */

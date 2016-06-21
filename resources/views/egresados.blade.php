@@ -130,18 +130,20 @@
 
                     <div class="col-md-12">
                         <div class="card-box">
+
                             <div class="pull-right">
                                 <button type="button" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5" data-toggle="modal" data-target="#modal-agregar" > <i class="fa fa-plus"></i> Agregar Egresado</button>
+                                <button type="button" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5" data-toggle="modal" data-target="#modal-responsivo" > <i class="fa fa-send"></i> Enviar encuestas</button>
                                                                                             
                                 
                             </div>
 
                             <h4 class="header-title m-t-0 m-b-30">Egresados</h4>
-
                             <div >
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
+                                        <th><input type="checkbox" onclick="selectAll()" id="checkall"></th>
                                         <th>Matrícula</th>
                                         <th>Nombre</th>
                                         <th hidden>Apellidos</th>
@@ -163,6 +165,8 @@
                                     @foreach( $egresados as $egresado )
 
                                      <tr id="{{"registro".$egresado->id}}">
+                                        <td hidden=""><input form="form1" type="text" disabled="true" hidden name="correos[]"  value="{{$egresado->correo}}" /></td>
+                                        <td> <input form="form1" onchange="showCorreo(this)" type="checkbox" name="egresados[]" value="{{$egresado->id}}"> </td>
                                         <td>{{ $egresado->matricula }}</td>
                                         <td>{{ $egresado->nombre." ".$egresado->apellidos }}</td>
                                          <td hidden>{{ $egresado->apellidos }}</td>
@@ -193,8 +197,8 @@
                                         <td>{{ $egresado->empleo_actual }}</td>
                                         <td>{{ $egresado->telefono }}</td>
                                         <td>
-                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="loadEgresado( {{ $egresado->id }}) " > <i class="fa fa-pencil"></i> </button>
-                                            <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEgresado({{ $egresado->id }})"> <i class="fa fa-trash"></i> </button>
+                                            <button type="button" class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar" onclick="loadEgresado( {{ $egresado->id }}) " > <i class="fa fa-pencil"></i> </button>
+                                            <button type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5 col-sm-6" onclick="deleteEgresado({{ $egresado->id }})"> <i class="fa fa-trash"></i> </button>
                                         </td>
                                          <td hidden>{{ $egresado->nombre }}</td>
                                     </tr>
@@ -496,7 +500,68 @@
                 </div>
             </div>
         </div><!-- /.modal -->
+        
+        <div id="modal-responsivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Agregar Registro</h4>
+                        </div>
+                        <div class="modal-body">
 
+                                        <form id="form1" action="bind/egresado" method="POST">
+                                            
+                                            {{ csrf_field() }}
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="field-1" class="control-label">Encuesta:</label>
+                                                    <select class="form-control select2" name="encuesta_id" required>
+                                                        <option value="">Selecciona la Encuesta</option>
+                                                        @foreach($encuestas as $encuesta)
+                                                        <option value="{{$encuesta->id}}">{{$encuesta->codigo}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="field-1" class="control-label">Vigencia de encuesta:</label>
+                                                    <select class="form-control select2" name="vigencia" required>
+                                                        <option value="">Selecciona la Vigencia</option>
+                                                        <option value="6">6 meses</option>
+                                                        <option value="12">12 meses</option>
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                
+                                                
+                                                
+                                                
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
+                                                    </div>
+                                                </form>
+
+                                           
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+            </div><!-- /.modal -->
 
 
         <div id="modal-reporte" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -806,21 +871,48 @@
 
                 var record = document.getElementById("registro"+id);
                 document.getElementById('id').value = id;
-                document.getElementById('matriculae').value=record.childNodes[1].innerHTML;
-                document.getElementById('nombree').value=record.childNodes[23].innerHTML;
-                document.getElementById('apellidose').value=record.childNodes[5].innerHTML;
-                document.getElementById('carrerae').value=record.childNodes[7].innerHTML;
-                document.getElementById('correoe').value=record.childNodes[9].innerHTML;
-                document.getElementById('anio_egresoe').value=record.childNodes[11].innerHTML;
-                document.getElementById('municipio_procedenciae').value=record.childNodes[13].innerHTML;
-                document.getElementById('residencia_actuale').value=record.childNodes[15].innerHTML;
-                document.getElementById('empleo_actuale').value=record.childNodes[17].innerHTML;
-                document.getElementById('telefonoe').value=record.childNodes[19].innerHTML;
-
-
-
+                document.getElementById('matriculae').value=record.childNodes[3].innerHTML;
+                document.getElementById('nombree').value=record.childNodes[25].innerHTML;
+                document.getElementById('apellidose').value=record.childNodes[7].innerHTML;
+                document.getElementById('carrerae').value=record.childNodes[9].innerHTML;
+                document.getElementById('correoe').value=record.childNodes[11].innerHTML;
+                document.getElementById('anio_egresoe').value=record.childNodes[13].innerHTML;
+                document.getElementById('municipio_procedenciae').value=record.childNodes[15].innerHTML;
+                document.getElementById('residencia_actuale').value=record.childNodes[17].innerHTML;
+                document.getElementById('empleo_actuale').value=record.childNodes[19].innerHTML;
+                document.getElementById('telefonoe').value=record.childNodes[21].innerHTML;
             }
 
+            function selectAll()
+            {
+                check = document.getElementById('checkall');
+                x=document.getElementsByName('egresados[]');
+                if (check.checked)
+                {
+                    for(i=0;i<x.length;i++)
+                    {
+                        x[i].checked=true;
+                    }
+                }
+                else
+                {
+                    for(i=0;i<x.length;i++)
+                    {
+                        x[i].checked=false;
+                    }   
+                }
+            }
+            function showCorreo (elemento) {
+                if(elemento.checked)
+                {
+                    elemento.parentNode.parentNode.childNodes[1].childNodes[0].disabled=false;
+                    //alert(elemento.parentNode.parentNode.childNodes[1].childNodes[0].value); 
+                }
+                else
+                {
+                    elemento.parentNode.parentNode.childNodes[1].childNodes[0].disabled=true;
+                }
+            }
         </script>
 
     </body>
