@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 use App\Empleador;
 use App\Egresado;
 use App\Encuesta;
+use App\Empleador_Encuesta;
+use App\Egresado_Encuesta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use View;
@@ -118,21 +120,27 @@ class ReporteController extends Controller
 
     public function geditegresadorelation( Request $data ){
 
-        $egresados = Egresado::all();
-        $encuestas = Encuesta::all();
-        $empleadores = Empleador::all();
 
-        return View::make('prueba')->with('egresados',$egresados)->with('encuestas',$encuestas)->with('empleadores',$empleadores);
+        $relacion = Egresado_Encuesta::    where( 'egresado_id' , $data->id_egresado )
+                                         ->where( 'encuesta_id' , $data->id_encuesta )
+                                         ->update(['estado' => $data->estado ]);
+
+
+
+        return redirect()->action('MainController@index');
 
     }
 
     public function empleadorrelation( Request $data  ){
 
-        $egresados = Egresado::all();
-        $encuestas = Encuesta::all();
-        $empleadores = Empleador::all();
 
-        return View::make('prueba')->with('egresados',$egresados)->with('encuestas',$encuestas)->with('empleadores',$empleadores);
+        $relacion = Empleador_Encuesta:: where( 'id_empleador' , $data->id_empleador )
+                                         ->where( 'id_encuesta' , $data->id_encuesta )
+                                         ->update(['estatus' => $data->estado ]);
+
+
+
+        return redirect()->action('MainController@index');
     }
 
 }

@@ -283,10 +283,12 @@
                                             <option value="0">Todas</option>
                                             <option value="1">Ing. en Computación</option>
                                             <option value="2">Ing. en Electrónica</option>
+                                            <option value="7">Ing. en Mecánica Automotriz</option>
                                             <option value="3">Ing. en Mecatrónica</option>
                                             <option value="4">Ing. en Diseño</option>
                                             <option value="5">Ing. Indistrial</option>
                                             <option value="6">Lic. Ciencias Empresariales</option>
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -419,9 +421,11 @@
                                         <option value="1">Ing. en Computación</option>
                                         <option value="2">Ing. en Electrónica</option>
                                         <option value="3">Ing. en Mecatrónica</option>
+                                        <option value="7">Ing. en Mecánica Automotriz</option>
                                         <option value="4">Ing. en Diseño</option>
                                         <option value="5">Ing. Indistrial</option>
                                         <option value="6">Lic. Ciencias Empresariales</option>
+
                                     </select>
                                 </div>
                             </div>
