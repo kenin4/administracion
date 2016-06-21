@@ -686,7 +686,7 @@ pendiente de ti.&nbsp;</p><p class="size-16" style="Margin-top: 20px;Margin-bott
         
             <div style="Margin-left: 20px;Margin-right: 20px;Margin-bottom: 24px;">
       <div class="btn btn--flat btn--large" style="text-align:center;">
-        <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #fff;background-color: #e45d6b;font-family: 'Open Sans', sans-serif;" href="a">Toma nuestra encuesta</a><![endif]>
+        <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #fff;background-color: #e45d6b;font-family: 'Open Sans', sans-serif;" href="{{$encuesta->link}}">Toma nuestra encuesta</a><![endif]>
       <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="http://test.com" style="width:212px" arcsize="9%" fillcolor="#E45D6B" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">Toma nuestra encuesta</center></v:textbox></v:roundrect><![endif]--></div>
     </div>
         

@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Empleador;
+use App\Encuesta;
 use Illuminate\Support\Facades\Auth;
 use View;
 
@@ -29,7 +30,8 @@ class EmpleadorController extends Controller
     public function getAll()
     {
         $empleadores = Empleador::all();
-        return View::make('empleadores')->with('empleadores', $empleadores );
+        $encuestas = Encuesta::all();
+        return View::make('empleadores')->with('empleadores', $empleadores )->with('encuestas',$encuestas);
     }
 
     /*

@@ -888,6 +888,7 @@
                     for(i=0;i<x.length;i++)
                     {
                         x[i].checked=true;
+                        showCorreo(x[i]);
                     }
                 }
                 else
@@ -895,6 +896,7 @@
                     for(i=0;i<x.length;i++)
                     {
                         x[i].checked=false;
+                        showCorreo(x[i]);
                     }   
                 }
             }

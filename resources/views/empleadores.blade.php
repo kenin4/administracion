@@ -133,6 +133,7 @@
                         <div class="card-box">
                             <div class="pull-right">
                                 <button type="button" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5" data-toggle="modal" data-target="#modal-agregar" > <i class="fa fa-plus"></i> Agregar Empleador</button>
+                                <button type="button" class="btn btn-primary btn-bordred waves-effect w-md waves-light m-b-5" data-toggle="modal" data-target="#modal-responsivo" > <i class="fa fa-send"></i> Enviar encuestas</button>
                                                                                             
                                 
                             </div>
@@ -143,6 +144,7 @@
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
+                                        <th><input type="checkbox" onclick="selectAll()" id="checkall"></th>
                                         <th>Nombre</th>
                                         <th>Género</th>
                                         <th hidden>Nombre</th>
@@ -172,7 +174,8 @@
 
 
                                      <tr id="{{"registro".$empleador->id}}">
-
+                                         <td hidden=""><input form="form1" type="text" disabled="true" hidden name="correos[]"  value="{{$empleador->correo}}" /></td>
+                                         <td> <input form="form1" onchange="showCorreo(this)" type="checkbox" name="empleadores[]" value="{{$empleador->id}}"> </td>
                                          <td>{{ $empleador->nombre." ".$empleador->apellidos }}</td>
                                          <td>{{ $empleador->genero == 1 ? "Hombre" : "Mujer" }}</td>
                                          <td hidden>{{ $empleador->nombre }}</td>
@@ -451,7 +454,67 @@
 
 
 
+        <div id="modal-responsivo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Agregar Registro</h4>
+                        </div>
+                        <div class="modal-body">
 
+                                        <form id="form1" action="bind/empleador" method="POST">
+                                            
+                                            {{ csrf_field() }}
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="field-1" class="control-label">Encuesta:</label>
+                                                    <select class="form-control select2" name="encuesta_id" required>
+                                                        <option value="">Selecciona la Encuesta</option>
+                                                        @foreach($encuestas as $encuesta)
+                                                        <option value="{{$encuesta->id}}">{{$encuesta->codigo}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="field-1" class="control-label">Vigencia de encuesta:</label>
+                                                    <select class="form-control select2" name="vigencia" required>
+                                                        <option value="">Selecciona la Vigencia</option>
+                                                        <option value="6">6 meses</option>
+                                                        <option value="12">12 meses</option>
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                
+                                                
+                                                
+                                                
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-info waves-effect waves-light">Guardar</button>
+                                                    </div>
+                                                </form>
+
+                                           
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+            </div><!-- /.modal -->
 
         <div id="modal-editar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 
@@ -855,6 +918,38 @@
                 document.getElementById('cpe').value=record.childNodes[33].innerHTML;
 
 
+            }
+            function selectAll()
+            {
+                check = document.getElementById('checkall');
+                x=document.getElementsByName('empleadores[]');
+                if (check.checked)
+                {
+                    for(i=0;i<x.length;i++)
+                    {
+                        x[i].checked=true;
+                        showCorreo(x[i]);
+                    }
+                }
+                else
+                {
+                    for(i=0;i<x.length;i++)
+                    {
+                        x[i].checked=false;
+                        showCorreo(x[i]);
+                    }   
+                }
+            }
+            function showCorreo (elemento) {
+                if(elemento.checked)
+                {
+                    elemento.parentNode.parentNode.childNodes[1].childNodes[0].disabled=false;
+                    //alert(elemento.parentNode.parentNode.childNodes[1].childNodes[0].value); 
+                }
+                else
+                {
+                    elemento.parentNode.parentNode.childNodes[1].childNodes[0].disabled=true;
+                }
             }
 
         </script>
