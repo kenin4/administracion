@@ -17,13 +17,9 @@ use App\Empleador;
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function (){
-    	$egresados = Egresado::all();
-		$encuestas = Encuesta::all();
-		$empleadores = Empleador::all();
 
-		return View::make('prueba')->with('egresados',$egresados)->with('encuestas',$encuestas)->with('empleadores',$empleadores);
-	});
+
+	Route::get('/', 'MainController@index');
 
 	Route::get('usuarios', 'UserController@getAll');
 	Route::post('usuarios/new', 'UserController@addUser');

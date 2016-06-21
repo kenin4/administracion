@@ -117,7 +117,7 @@
                                 <div class="tab-content b-0 m-b-0">
                                     <div class="tab-pane m-t-10 fade" id="tab11">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered">
+                                            <table id="datatable" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th>Matrícula</th>
@@ -132,45 +132,63 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($egresados as $egresado )
                                                     
-                                                    @foreach($egresado->encuestas as $encuesta)
-                                                    <tr>
-                                                        
-                                                        <?php
-                                                        $relaciones= App\Egresado_Encuesta::where('egresado_id' , '=', $egresado->id)->where('encuesta_id', '=', $encuesta->id)->get();
-                                                        foreach ($relaciones as $relacion) {
-                                                        echo "<td>".$egresado->matricula."</td>";
-                                                        echo "<td>".$egresado->nombre. " ".$egresado->apellidos."</td>";
-                                                        echo "<td>".$egresado->carrera."</td>";
-                                                        echo "<td>".$egresado->fecha_graduacion."</td>";
-                                                        echo "<td>".$encuesta->codigo."</td>";
-                                                        echo "<td>".$relacion->fecha_aplicacion."</td>";
-                                                        echo "<td>".$relacion->fecha_proxima_aplicacion."</td>";
-                                                        }
-                                                        
-                                                        ?>
-                                                        
-                                                        <td>
-                                                            @if( $relacion->estado == 1 )
-                                                                <span class="label label-info">Enviado</span>                                                            
-                                                            @elseif ($hoy > $relacion->fecha_proxima_aplicacion)
-                                                                <span class="label label-danger">Vencido</span>
 
+                                                @foreach( $relaciones as $relacion )
+                                                     
+                                                        <td>{{ $relacion->matricula }}</td>
+                                                        <td>{{ $relacion->nombre}}</td>                                                     
+                                                        <td>
+
+                                                            @if( $relacion->carrera == 1 )
+                                                                Ing. en Computación
+                                                            @elseif( $relacion->carrera == 2 )
+                                                                Ing. en Electrónica
+                                                            @elseif( $relacion->carrera == 3 )
+                                                                Ing. en Mecatrónica
+                                                            @elseif( $relacion->carrera == 4 )
+                                                                Ing. en Diseño
+                                                            @elseif( $relacion->carrera == 5 )
+                                                                Ing. Industrial
+                                                            @elseif( $relacion->carrera == 6 )
+                                                                Lic. Ciencias Empresariales
                                                             @else
-                                                                <span class="label label-success">Vigente</span>
+                                                                Ing. en Mecánica Automotriz
                                                             @endif
 
+
+                                                        </td>
+                                                        <td>{{ $relacion->generacion }}</td>
+                                                        <td>{{ $relacion->encuesta }}</td>
+                                                        <td>{{ $relacion->aplicacion }}</td>
+                                                        <td>{{ $relacion->proxima }}</td>
+                                                        <td>
+                                                                @if( $relacion->estado == 1)
+                                                                    <span class="label label-info">Enviado</span>
+                                                                @elseif( $relacion->diferencia > 0)
+                                                                    <span class="label label-success">Vigente</span>
+                                                                @else
+                                                                    <span class="label label-danger">Expirado</span>
+                                                                @endif
+
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" data-toggle="modal" data-target="#modal-editar-egresados"> <i class="fa fa-pencil" onclick="loadEgresado( {{$egresado->id }} , {{ $encuesta->id }})"></i> 
-                                                            </button>                                                            
+                                                            
+                                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar-egresados" onclick="loadEgresado({{ $relacion->id_egresado }} , {{ $relacion->id_encuesta }} )" > <i class="fa fa-pencil"></i> </button>
+
+
+
+
                                                         </td>
+                                                                                                                
                                                     </tr>
+
                                                     @endforeach
-                                                    
-                                                    @endforeach
-                                                    
+
+
+
+
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -178,11 +196,12 @@
 
                                     <div class="tab-pane m-t-10 fade" id="tab12">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered">
+                                            <table id="datatable2" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
                                                         
                                                         <th>Nombre</th>
+                                                        <th>Puesto</th>
                                                         <th>Encuesta</th>
                                                         <th>Última Aplicación</th>
                                                         <th>Próxima Aplicación</th>
@@ -191,47 +210,35 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($empleadores as $empleador )
                                                     
-                                                    @foreach($empleador->encuestas as $encuesta)
-                                                    <tr>
-                                                        
-                                                        <?php
-                                                        $relaciones= App\Empleador_Encuesta::where('id_empleador' , '=', $empleador->id)->where('id_encuesta', '=', $encuesta->id)->get();
-                                                        foreach ($relaciones as $relacion) {
-                                                        echo "<td>".$empleador->nombre. " ".$empleador->apellidos."</td>";
-                                                        echo "<td>".$encuesta->codigo."</td>";
-                                                        echo "<td>".$relacion->fecha_aplicacion."</td>";
-                                                        echo "<td>".$relacion->fecha_proxima_aplicacion."</td>";
-                                                        }
-                                                        
-                                                        ?>
-                                                        
-                                                      
-                                                            <td>
-
-                                                            @if( $relacion->estatus == 1 )
-                                                                <span class="label label-info">Enviado</span>                                                            
-                                                            @elseif ($hoy > $relacion->fecha_proxima_aplicacion)
-                                                                <span class="label label-danger">Vencido</span>
-
-                                                            @else
-                                                                <span class="label label-success">Vigente</span>
-                                                            @endif
-
-                                                            </td>
-                                                        
+                                                    @foreach( $empleadores as $empleador )
+                                                     
+                                                        <td>{{ $empleador->nombre }}</td>
+                                                        <td>{{ $empleador->puesto }}</td>
+                                                        <td>{{ $empleador->encuesta }}</td>
+                                                        <td>{{ $empleador->aplicacion }}</td>
+                                                        <td>{{ $empleador->proxima }}</td>
                                                         <td>
+                                                                @if( $empleador->estado == 1)
+                                                                    <span class="label label-info">Enviado</span>
+                                                                @elseif( $empleador->diferencia > 0)
+                                                                    <span class="label label-success">Vigente</span>
+                                                                @else
+                                                                    <span class="label label-danger">Expirado</span>
+                                                                @endif
 
-                                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" data-toggle="modal" data-target="#modal-editar-empleadores" > <i class="fa fa-pencil" onclick="loadEmpleador( {{$empleador->id }} , {{ $encuesta->id}})"></i> 
-                                                            </button>                                                            
                                                         </td>
+                                                        <td>
+                                                            
+                                                            <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5 col-sm-6" data-toggle="modal" data-target="#modal-editar-empleadores" onclick="loadEmpleador({{ $empleador->id_empleador }} , {{ $empleador->id_encuesta }} )" > <i class="fa fa-pencil"></i> </button>
+
+
+                                                        </td>                                                                                                                            
                                                     </tr>
+
                                                     @endforeach
-                                                    
-                                                    @endforeach
-                                                    
-                                                </tbody>
+
+
                                             </table>
                                         </div>
                                     </div>
@@ -314,12 +321,8 @@
                                                 <div class="form-group pull-right">
                                                     <div>
                                                         <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                            Generar
-                                                        </button>
-                                                        <button type="reset"
-                                                                class="btn btn-default waves-effect waves-light m-l-5">
-                                                            Limpiar
-                                                        </button>
+                                                            Editar
+                                                        </button>            
                                                     </div>
                                                 </div>
 
@@ -332,7 +335,7 @@
 
 
 
-                            <div id="modal-editar-empleadores" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div id="modal-editar-empleadores" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
 
                                 
@@ -385,12 +388,8 @@
                                                 <div class="form-group pull-right">
                                                     <div>
                                                         <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                            Generar
-                                                        </button>
-                                                        <button type="reset"
-                                                                class="btn btn-default waves-effect waves-light m-l-5">
-                                                            Limpiar
-                                                        </button>
+                                                            Editar
+                                                        </button>            
                                                     </div>
                                                 </div>
 
@@ -457,6 +456,11 @@
         $('#basicwizard').bootstrapWizard({'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
         $('#basicwizard1').bootstrapWizard({'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
         $('#basicwizard2').bootstrapWizard({'tabClass': 'nav nav-tabs navtab-wizard nav-justified bg-muted'});
+
+
+        $(".select2").select2();
+        $('#datatable').dataTable();
+        $('#datatable2').dataTable();
 
         });
 
